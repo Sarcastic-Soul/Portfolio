@@ -1,0 +1,541 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg1: #20232D;
+    --bg2: #2B2F3A;
+    --accent1: #01CD8F;
+    --accent2: #02BA84;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 60%;
+}
+
+body {
+    font-family: roboto, sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: large;
+    background-color: var(--bg1);
+    color: white;
+    padding: 2vh 5vw;
+    height: 4vh;
+    width: 95vw;
+    z-index: 10;
+    box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.4);
+}
+
+#navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 40vw;
+    min-width: 230px;
+}
+
+#navbar a {
+    color: white;
+    transition: color 0.5s ease;
+}
+
+#navbar a:hover {
+    color: var(--accent2);
+}
+
+#welcome-section {
+    background-color: var(--bg1);
+    padding: 20vh 5vw;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 4rem;
+    height: 70vh;
+}
+
+
+
+#welcome-section #lets-talk {
+    padding: 17px 40px;
+    border-radius: 50px;
+    border: 0;
+    background-color: white;
+    box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 15px;
+    transition: all 0.5s ease;
+    font-weight: 500;
+}
+
+#welcome-section #lets-talk:hover {
+    letter-spacing: 3px;
+    background-color: var(--accent1);
+    color: hsl(0, 0%, 100%);
+    box-shadow: var(--accent2) 0px 7px 29px 0px;
+}
+
+#welcome-section #lets-talk:active {
+    letter-spacing: 3px;
+    background-color: var(--accent1);
+    color: hsl(0, 0%, 100%);
+    box-shadow: var(--accent2) 0px 0px 0px 0px;
+    transform: translateY(10px);
+    transition: 100ms;
+}
+
+.profile-links {
+    display: flex;
+    align-items: center;
+    margin: 0.8em 0;
+}
+
+.profile-links a {
+    display: block;
+    width: fit-content;
+    font-size: 40px;
+    padding: 0.5em 1em;
+    font-weight: 500;
+    background: #1f2937;
+    color: #d6d6d6;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.6em;
+    margin: 0 1vw;
+}
+
+.profile-links a .gradient {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 0.6em;
+    margin-top: -0.25em;
+    background-image: linear-gradient(rgba(0, 0, 0, 0),
+            rgba(0, 0, 0, 0),
+            rgba(0, 0, 0, 0.3));
+}
+
+.profile-links a:hover {
+    -webkit-box-shadow: -1px -5px 15px #41465b, 5px 5px 15px #41465b;
+    box-shadow: -1px -5px 15px #41465b, 5px 5px 15px #41465b;
+    -webkit-transition: 500ms;
+    transition: 500ms;
+}
+
+.profile-links a:active {
+    -webkit-box-shadow: 1px 1px 13px #20232e, -1px -1px 33px #545b78;
+    box-shadow: 1px 1px 13px #20232e, -1px -1px 33px #545b78;
+    color: white;
+    -webkit-transition: 100ms;
+    transition: 100ms;
+}
+
+#about {
+    background-color: var(--bg2);
+    padding: 16vh 5vw;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70vh;
+    font-size: 1.3rem;
+}
+
+#about h1 {
+    text-align: center;
+    margin: 1vh 0;
+    font-size: 4rem;
+}
+
+#about p {
+    letter-spacing: 1px;
+    font-size: 1.6rem;
+}
+
+#about img {
+    height: 40vmax;
+    width: 35vmax;
+    object-fit: cover;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.08);
+}
+
+#about .card {
+    width: 44vw;
+    height: 37vh;
+    min-width: 263px;
+    background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
+    border-radius: 0.5rem;
+    transition: all .3s;
+    margin: 2vh;
+}
+
+#about .card2 {
+    width: 40vw;
+    height: 35vh;
+    min-width: 250px;
+    background-color: var(--bg1);
+    transition: all .2s;
+    padding: 1vh 2vw;
+    border-radius: 0.4rem;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+}
+
+#about .card2::-webkit-scrollbar {
+    /* Chrome Safari FireFox */
+    display: none;
+}
+
+#about .card2:hover {
+    transform: scale(0.98);
+    border-radius: 0.5rem;
+}
+
+#about .card:hover {
+    box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);
+}
+
+#about .skills {
+    padding-right: 2vw;
+}
+
+#about .skills h1 {
+    color: white;
+    letter-spacing: 2px;
+}
+
+#about .skills .skillbox {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 1vh;
+}
+
+#about .skills .skillbox p {
+    color: white;
+    text-transform: uppercase;
+    padding: 0;
+    margin: 5px;
+    font-weight: bold;
+}
+
+#about .skills .skill {
+    background-color: #262626;
+    padding: 4px;
+    box-sizing: border-box;
+    border: 1px solid var(--accent2);
+    border-radius: 2px;
+}
+
+#about .skills .skill_level {
+    background-color: var(--accent1);
+    width: 100%;
+    height: 10px;
+}
+
+
+#projects {
+    background-color: var(--bg1);
+    color: white;
+    padding: 5vh 5vw;
+    height: 90vh;
+}
+
+#projects h1 {
+    text-align: center;
+    margin: 10vh;
+    font-size: 4rem;
+}
+
+.projects-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.project-tile {
+    --background: linear-gradient(to left, var(--accent1) 0%, var(--accent2) 100%);
+    width: 20vmax;
+    height: 50vmin;
+    padding: 5px;
+    border-radius: 1rem;
+    overflow: visible;
+    background: var(--background);
+    position: relative;
+    z-index: 1;
+}
+
+.project-tile::after {
+    position: absolute;
+    content: "";
+    top: 30px;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    transform: scale(0.8);
+    filter: blur(25px);
+    background: var(--accent1);
+    background: var(--background);
+    transition: opacity .5s;
+}
+
+.project-card-info {
+    --color: white;
+    background: var(--color);
+    color: var(--color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    border-radius: .7rem;
+    font-size: 0.05rem;
+}
+
+
+.projects-container #project1 {
+    background: url(PokemonWiki_Project.png);
+    background-size: cover;
+    background-position: 30%;
+}
+
+.projects-container #project1:hover {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(PokemonWiki_Project.png);
+    background-size: cover;
+    background-position: 30%;
+}
+
+.projects-container #project2 {
+    background: url(Tic_Tac_Toe_Project.png);
+    background-size: cover;
+    background-position: 50%;
+}
+
+.projects-container #project2:hover {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(Tic_Tac_Toe_Project.png);
+    background-size: cover;
+    background-position: 50%;
+}
+
+.projects-container #project3 {
+    background: url(Rock_Paper_Scissors_project.png);
+    background-size: cover;
+    background-position: 50%;
+}
+
+.projects-container #project3:hover {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(Rock_Paper_Scissors_project.png);
+    background-size: cover;
+    background-position: 50%;
+}
+
+.project-tile:hover::after {
+    opacity: 0;
+}
+
+.project-tile:hover .project-card-info {
+    font-weight: bold;
+    transition: all 0.5s ease;
+    color: white;
+    font-size: 2rem;
+}
+
+#contact {
+    background-color: var(--bg2);
+    color: white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 50vh;
+    font-size: 2rem;
+}
+
+#social-media {
+    display: flex;
+    text-align: center;
+    font-size: 30px;
+    margin: 3vh 0;
+}
+
+.social {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#social-media li {
+    color: rgba(1, 205, 143, 0.6);
+    list-style-type: none;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    padding: 1%;
+    border: 1px solid rgba(1, 205, 143, 0.4);
+    cursor: pointer;
+    margin-left: 10px;
+    margin-bottom: 20px;
+    transition: ease .3s;
+}
+
+#social-media li:hover {
+    color: rgba(1, 205, 143, 1);
+    border: 1px solid rgba(1, 205, 143, 1);
+    ;
+}
+
+.social:hover>li {
+    opacity: 0.5;
+}
+
+.social:hover>li:hover {
+    opacity: 1;
+}
+
+.acc2-text {
+    color: var(--accent2);
+}
+
+.acc1-text {
+    color: var(--accent1);
+}
+
+.particle {
+    /* Starting values */
+    --angle: (5 * var(--index));
+    --radius: 30;
+    --x: calc(sin(var(--angle)) * var(--radius) * 1vmin);
+    --y: calc(cos(var(--angle)) * var(--radius) * 1vmin);
+
+    /* Ending values */
+    /* 
+    Had to move these outside the @keyframe and rename them 
+    because Chrome was being weird 
+    Bonusly, performance seems much better 
+    */
+    --angle2: calc(var(--index) * 1turn / var(--total));
+    --x2: calc(sin(var(--angle2)) * var(--radius) * 1vmin);
+    --y2: calc(cos(var(--angle2)) * var(--radius) * 1vmin);
+
+    --size: 5;
+    --speed: 3s;
+    --delay: calc(var(--index) * var(--speed) / var(--total) * 4);
+
+    --hue-angle: 10;
+    --hue-range: 60;
+    --hue-start: 120;
+
+    /* Animation */
+    animation: animation var(--speed) ease-out infinite alternate var(--delay);
+    transform: translate3d(var(--x), var(--y), 0);
+    opacity: 0;
+
+    /* Particle styling */
+    border-radius: 50%;
+    background: currentColor;
+    color: oklch(75% 0.3 calc(sin(var(--hue-angle) * var(--index)) * var(--hue-range) + var(--hue-start)));
+    position: absolute;
+    right: 25vw;
+    top: 50vh;
+    width: calc(var(--size) * 0.1vmin);
+    height: calc(var(--size) * 0.1vmin);
+    contain: strict;
+    /* Does this help or is translate3d already doing it*/
+}
+
+@keyframes animation {
+    100% {
+        transform: translate3d(var(--x2), var(--y2), 0);
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 600px) and (min-width: 400px) {
+    #about img {
+        display: none;
+    }
+
+    #about {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #about p {
+        font-size: 1rem;
+    }
+
+    #contact {
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    html {
+        font-size: 50%;
+    }
+
+    #welcome-section #intro {
+        text-align: center;
+    }
+
+    #welcome-section .profile-links {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+
+    }
+
+    #welcome-section .sphere-animation {
+        display: none;
+    }
+
+    #about p {
+        font-size: 1.2rem;
+    }
+
+    #about img {
+        display: none;
+    }
+
+    #projects h1 {
+        margin: 0;
+    }
+
+    .projects-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: column;
+    }
+
+    .project-tile {
+        margin: 5px;
+    }
+
+    #contact {
+        font-size: 1.2rem;
+    }
+
+}

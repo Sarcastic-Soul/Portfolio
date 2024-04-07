@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Porfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <header>
+            <div id="logo">
+                Anish <span class="acc2-text">Kumar</span>
+            </div>
+            <nav id="navbar">
+                <a href="#welcome-section">Home</a>
+                <a href="#about">About</a>
+                <a href="#projects">Work</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </header>
+
+        <div id="welcome-section">
+            <div id="intro">
+                <h2>Hello, <span class="acc2-text">I'm</span></h2>
+                <h1 class="name"><span class="acc1-text">Anish Kumar</span></h1>
+                <h2>Front-end Developer</h2>
+                <a href="mailto:anishisbusy@gmail.com" id="lets-talk">Let's Talk</a>
+                <div class="profile-links">
+                    <div id="github">
+                        <a href="https://github.com/Sarcastic-Soul" title="GitHub" id="profile-link" target="_blank">
+                            <span class="gradient"></span>
+                            <i class="fa-brands fa-github"></i>
+                            </span>
+                        </a>
+                    </div>
+                    <div id="cv">
+                        <a href="" title="Download CV">
+                            <span class="gradient"></span>
+                            <i class="fa-regular fa-file-lines"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="sphere-animation" style="--total: 1080">
+                    <script>
+                        var i = 1080;
+                        while (i--) {
+                            var index = 1080 - i;
+                            document.write('<div class="particle" style="--index: ' + index + '"></div>');
+                        }
+                    </script>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="about">
+            <img src="ProfilePhoto.jpg" alt="Person Coding">
+            <div class="about-skill">
+                <div class="card">
+                    <div class="card2">
+                        <h1>About <span class="acc2-text">Me</span></h1>
+                        <p>Hey there! I'm Anish Kumar, originally from Varanasi, India. Right now, I'm a student at
+                            IIITNR,
+                            diving into the world of Electronics and Communication Engineering. But my real passion?
+                            Making
+                            cool stuff online - like websites and games. There's something special about bringing ideas
+                            to
+                            life on a screen, don't you think? And hey, I'm not just about serious stuff. I also love
+                            diving
+                            into hackathons, those crazy events where we race against the clock to build something
+                            awesome.
+                            It's all about learning and having a good time. So, if you're up for it, let's journey
+                            together
+                            as we explore, innovate, and create wonders together!</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card2">
+                        <div class="skills">
+                            <h1>Skills</h1>
+                            <div class="skillbox">
+                                <p>HTML5</p>
+                                <div class="skill">
+                                    <div class="skill_level" style="width: 90%;"></div>
+                                </div>
+                            </div>
+                            <div class="skillbox">
+                                <p>CSS</p>
+                                <div class="skill">
+                                    <div class="skill_level" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                            <div class="skillbox">
+                                <p>JS</p>
+                                <div class="skill">
+                                    <div class="skill_level" style="width: 60%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="projects">
+            <h1>My <span class="acc1-text">Work</span></h1>
+            <div class="projects-container">
+                <a href="https://github.com/Sarcastic-Soul/Pokemon-Wiki">
+                    <div class="project-tile">
+                        <div class="project-card-info" id="project1">
+                            <p class="project-title overlay">Pokemon Wiki</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://github.com/Sarcastic-Soul/Tic-Tac-Toe">
+                    <div class="project-tile">
+                        <div class="project-card-info" id="project2">
+                            <p class="project-title">Tic Tac Toe</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://github.com/Sarcastic-Soul/Rock-Paper-Scissors">
+                    <div class="project-tile">
+                        <div class="project-card-info" id="project3">
+                            <p class="project-title">Rock Paper Scissors</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div id="contact">
+            <h1>Interested in working together...</h1>
+            <h3>Let's team up and brew some success! Drop me a message.</h3>
+            <div id="social-media">
+                <ul class="social">
+                    <a href="https://www.linkedin.com/in/anish-kumar-852397290" target="_blank">
+                        <li><i class="fa fa-linkedin" aria-hidden="true"></i></li>
+                    </a>
+                    <a href="https://codepen.io/topxegne-the-flexboxer" target="_blank">
+                        <li><i class="fa fa-codepen" aria-hidden="true"></i></li>
+                    </a>
+                    <a href="https://github.com/Sarcastic-Soul" target="_blank">
+                        <li><i class="fa fa-github" aria-hidden="true"></i></li>
+                    </a>
+                    <a href="https://www.instagram.com/anish_is_busy/" target="_blank">
+                        <li><i class="fa fa-instagram" aria-hidden="true"></i></li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
