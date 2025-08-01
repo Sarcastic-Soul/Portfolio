@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: "/Portfolio",
+  output: "export",
+  reactStrictMode: true,
   experimental: {
     optimizePackageImports: ['framer-motion', 'lucide-react'],
   },
