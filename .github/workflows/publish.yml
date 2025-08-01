@@ -1,5 +1,40 @@
-# File: .github/workflows/publish.yml
-name: publish-to-github-pages
+# File: .github/workflows/publish.y      - name: Build with Next.js 🏗️
+        run: pnpm build
+
+      - name: Check build output and create .nojekyll 📄
+        run: |
+          echo "Current working directory:"
+          pwd
+          echo "Contents of current directory:"
+          ls -la
+          echo "Checking for output directories:"
+          find . -maxdepth 2 -name "out" -o -name "dist" -o -name "build" -type d
+          
+          # Check if out directory exists
+          if [ -d "./out" ]; then
+            echo "Found ./out directory"
+            echo "Contents of ./out:"
+            ls -la ./out
+            echo "" > ./out/.nojekyll
+            echo "Created .nojekyll file in ./out"
+          elif [ -d "./.next" ]; then
+            echo "Only .next directory found - checking if static export was generated"
+            find ./.next -name "*.html" | head -5
+            echo "This suggests the build didn't create a static export"
+            echo "Creating out directory and copying from .next/static if available"
+            mkdir -p ./out
+            if [ -d "./.next/static" ]; then
+              cp -r ./.next/static ./out/
+            fi
+            echo "" > ./out/.nojekyll
+          else
+            echo "No output directory found - creating ./out manually"
+            mkdir -p ./out
+            echo "" > ./out/.nojekyll
+          fi
+          
+          echo "Final verification - .nojekyll file:"
+          ls -la ./out/.nojekyllish-to-github-pages
 on:
   push:
     branches:
@@ -32,6 +67,17 @@ jobs:
 
       - name: Install dependencies (if not cached) 🔧
         run: pnpm install --frozen-lockfile
+
+      - name: Clean conflicting config files 🧹
+        run: |
+          echo "Checking for config files:"
+          ls -la next.config.*
+          if [ -f "next.config.js" ]; then
+            echo "Removing conflicting next.config.js file"
+            rm next.config.js
+          fi
+          echo "Final config files:"
+          ls -la next.config.*
 
       - name: Build with Next.js 🏗️
         run: pnpm build
