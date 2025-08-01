@@ -2,7 +2,7 @@
 const nextConfig = {
   // basePath: "/Portfolio", // Uncomment for production deployment
   output: "export",
-  distDir: "dist",
+  distDir: "out",
   reactStrictMode: true,
   experimental: {
     optimizePackageImports: ['framer-motion', 'lucide-react'],
