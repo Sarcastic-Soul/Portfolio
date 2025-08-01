@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
+
+const isProd = process.env.NODE_ENV === 'production';
 const nextConfig = {
-  // basePath: "/Portfolio", // Uncomment for production deployment
+  basePath: isProd ? "/Portfolio" : "",
   output: "export",
   distDir: "out",
   reactStrictMode: true,
