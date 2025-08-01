@@ -7,6 +7,8 @@ import { ExternalLink, Github } from "lucide-react"
 import Image from "next/image"
 import { ProjectIllustration } from "@/components/illustrations/project-illustration"
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 const projects = [
   {
     title: "MERN ChatApp",
@@ -35,7 +37,7 @@ const projects = [
   {
     title: "Brutshop - E-commerce Platform",
     description: " A Neo-brutalist e-commerce app built with Spring Boot and React",
-    image: "/projects/springboot-ecommerce.png",
+    image: `${basePath}/projects/springboot-ecommerce.png`,
     technologies: ["Spring Boot", "React", "Supabase", "Cloudinary", "Docker"],
     github: "https://github.com/Sarcastic-Soul/E-commerce-Sprinboot",
     demo: "https://springboot-ecommerce-latest-ctgu.onrender.com/",

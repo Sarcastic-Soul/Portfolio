@@ -9,6 +9,9 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['framer-motion', 'lucide-react'],
   },
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },

@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button"
 import { ArrowDown, Github, Linkedin, Mail, Download } from "lucide-react"
 import { FloatingElements } from "@/components/floating-elements"
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export function Hero() {
   const handleGetInTouch = () => {
     window.location.href =
@@ -13,8 +15,8 @@ export function Hero() {
 
   const handleDownloadResume = () => {
     const link = document.createElement("a")
-    link.href = "/Anish_Kumar-Resume.pdf"
-    link.download = "Anish_Kumar-Resume.pdf"
+    link.href = `${basePath}/Anish_Kumar-Resume.pdf`
+    link.download = `${basePath}/Anish_Kumar-Resume.pdf`
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)

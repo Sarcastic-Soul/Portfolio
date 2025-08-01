@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ["latin"] })
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export const metadata: Metadata = {
   title: "Anish Kumar - Full Stack Developer",
@@ -16,10 +17,10 @@ export const metadata: Metadata = {
   creator: "Anish Kumar",
   icons: {
     icon: [
-      { url: '/favicon.ico' },
-      { url: '/icon.png', type: 'image/png' },
+      { url: `${basePath}/favicon.ico` },
+      { url: `${basePath}/icon.png`, type: 'image/png' },
     ],
-    shortcut: '/favicon.ico',
+    shortcut: `${basePath}/favicon.ico`,
   },
   openGraph: {
     type: "website",
@@ -37,7 +38,6 @@ export const metadata: Metadata = {
       "Portfolio of Anish Kumar, a passionate full-stack developer specializing in React, Node.js, and modern web technologies.",
     creator: "@anishkumar",
   },
-  generator: 'v0.dev'
 }
 
 export default function RootLayout({
