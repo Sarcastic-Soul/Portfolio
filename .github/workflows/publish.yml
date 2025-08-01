@@ -80,7 +80,11 @@ jobs:
           ls -la next.config.*
 
       - name: Build with Next.js 🏗️
-        run: pnpm build
+        run: |
+          echo "Starting Next.js build..."
+          pnpm build
+          echo "Build completed. Checking output..."
+          ls -la
 
       - name: Add .nojekyll file �
         run: |
