@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
 
 const isProd = process.env.NODE_ENV === 'production';
+const basePath = isProd ? "/Portfolio" : "";
+
 const nextConfig = {
-  basePath: isProd ? "/Portfolio" : "",
+  basePath: basePath,
   output: "export",
   distDir: "out",
   reactStrictMode: true,
@@ -19,10 +21,8 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: ['placeholder.svg'],
-    formats: ['image/webp', 'image/avif'],
     unoptimized: true,
   },
 }
 
-export default nextConfig
+export default nextConfig;
