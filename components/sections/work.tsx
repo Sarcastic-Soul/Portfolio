@@ -21,7 +21,7 @@ const projects = [
   {
     title: "Converso - Voice LMS",
     description: "A voice-based Learning Management System (LMS) for interactive learning experiences",
-    image: "/placeholder.svg?height=400&width=600",
+    image: `${basePath}/projects/voice-lms.png`,
     technologies: ["Next.js", "TypeScript", "Supabase", "Clerk", "Google Gemini"],
     github: "https://github.com/Sarcastic-Soul/Voice-LMS",
     demo: "https://voice-lms.vercel.app/",
@@ -29,7 +29,7 @@ const projects = [
   {
     title: "ASCII Art Generator",
     description: "A tool for generating ASCII art from images.",
-    image: "/placeholder.svg?height=400&width=600",
+    image: `${basePath}/projects/ascii-art.png`,
     technologies: ["Next.js", "TypeScript", "NeonDB", "Clerk", "Drizzle ORM"],
     github: "https://github.com/Sarcastic-Soul/ascii-art-saas",
     demo: "https://ascii-art-saas.vercel.app/",
@@ -45,14 +45,14 @@ const projects = [
   {
     title: "AI PDF Chat App",
     description: "AI chatbot for chatting with large PDFs using RAG.",
-    image: "/placeholder.svg?height=400&width=600",
+    image: `${basePath}/projects/pdf-chat-app.png`,
     technologies: ["Deepseek", "Qdrant", "BullMQ", "Next.js", "TypeScript", "ShadCN"],
     github: "https://github.com/Sarcastic-Soul/AI-PDF-ChatApp",
   },
   {
     title: "MindEase",
     description: "A mental health platform offering self-assessment tools, meditation resources, and AI-driven support.",
-    image: "/placeholder.svg?height=400&width=600",
+    image: `${basePath}/projects/mindease.png`,
     technologies: ["Next.js", "MongoDB", "Google Gemini"],
     github: "https://github.com/Sarcastic-Soul/mindease",
     demo: "https://mindease-ruddy.vercel.app/",
