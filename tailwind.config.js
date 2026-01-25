@@ -113,19 +113,25 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in": "fade-in 0.6s ease-out",
-        "fade-in-up": "fade-in-up 0.6s ease-out",
-        "slide-in-left": "slide-in-left 0.6s ease-out",
-        "slide-in-right": "slide-in-right 0.6s ease-out",
-        "scale-in": "scale-in 0.6s ease-out",
+        "fade-in": "fade-in 0.6s ease-out both",
+        "fade-in-up": "fade-in-up 0.6s ease-out both",
+        "slide-in-left": "slide-in-left 0.6s ease-out both",
+        "slide-in-right": "slide-in-right 0.6s ease-out both",
+        "scale-in": "scale-in 0.6s ease-out both",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
+        sans: ["JetBrains Mono", "Inter", "system-ui", "sans-serif"],
         mono: ["JetBrains Mono", "Fira Code", "monospace"],
       },
       fontSize: {
-        display: ["clamp(3rem, 8vw, 8rem)", { lineHeight: "0.9", letterSpacing: "-0.02em" }],
-        heading: ["clamp(2rem, 5vw, 4rem)", { lineHeight: "1.1", letterSpacing: "-0.01em" }],
+        display: [
+          "clamp(3rem, 8vw, 8rem)",
+          { lineHeight: "0.9", letterSpacing: "-0.02em" },
+        ],
+        heading: [
+          "clamp(2rem, 5vw, 4rem)",
+          { lineHeight: "1.1", letterSpacing: "-0.01em" },
+        ],
         subheading: ["clamp(1.25rem, 3vw, 2rem)", { lineHeight: "1.3" }],
       },
       spacing: {
@@ -148,4 +154,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};

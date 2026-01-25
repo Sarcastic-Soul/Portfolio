@@ -1,141 +1,232 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { ExternalLink, Github, Code, Trophy, Target, Zap, Brain, Award } from "lucide-react"
+import { useState, useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ExternalLink, Code2, Terminal, Github } from "lucide-react";
 
-const profiles = [
-  {
-    platform: "GitHub",
-    username: "@Sarcastic-Soul",
-    icon: Github,
-    stats: {
-      repositories: "30+",
-    },
-    description: "Open source contributions and personal projects",
-    url: "https://github.com/Sarcastic-Soul",
-  },
+// Initial static data
+const initialProfiles = [
   {
     platform: "LeetCode",
-    username: "anish_codes",
-    icon: Code,
+    username: "Anish_Kumar_",
+    link: "https://leetcode.com/u/Anish_Kumar_/",
+    icon: Code2,
     stats: {
-      solved: "135+",
-      rating: "1517",
+      "Problems Solved": "Loading...",
+      "Global Ranking": "Loading...",
+      "Acceptance Rate": "Loading...",
     },
-    description: "Algorithm and data structure problem solving",
-    url: "https://leetcode.com/u/Anish_Kumar_/",
   },
   {
     platform: "Codeforces",
-    username: "Samurott",
-    icon: Trophy,
+    username: "Sarcastic-Soul",
+    link: "https://codeforces.com/profile/Sarcastic-Soul",
+    icon: Terminal,
     stats: {
-      rating: "1217",
-      rank: "Pupil",
-      contests: "30+",
+      Rating: "Loading...",
+      "Max Rating": "Loading...",
+      Rank: "Loading...",
     },
-    description: "Competitive programming and contests",
-    url: "https://codeforces.com/profile/Samurott",
   },
   {
-    platform: "CodeChef",
-    username: "anish_cp",
-    icon: Target,
+    platform: "GitHub",
+    username: "Sarcastic-Soul",
+    link: "https://github.com/Sarcastic-Soul",
+    icon: Github,
     stats: {
-      rating: "1575",
-      stars: "2★",
+      "Total Commits": "Loading...",
+      "Public Repos": "Loading...",
+      Followers: "Loading...",
     },
-    description: "Competitive programming and weekly contests",
-    url: "https://www.codechef.com/users/anish_cp",
   },
-  {
-    platform: "AtCoder",
-    username: "Anish_Kumar",
-    icon: Brain,
-    stats: {
-      rating: "473",
-      rank: "Bronze",
-      contests: "15+",
-    },
-    description: "Japanese competitive programming platform",
-    url: "https://atcoder.jp/users/Anish_Kumar",
-  },
-]
+];
 
 export function CodingProfiles() {
+  const [profiles, setProfiles] = useState(initialProfiles);
+
+  useEffect(() => {
+    async function fetchStats() {
+      const CACHE_KEY = "coding_profiles_stats";
+      const CACHE_DURATION = 1000 * 60 * 60; // 1 Hour
+
+      // 1. Check Cache
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        try {
+          const { timestamp, data } = JSON.parse(cached);
+          if (Date.now() - timestamp < CACHE_DURATION) {
+            // FIX: Merge cached stats with the static profiles (which have the icons)
+            const restoredProfiles = initialProfiles.map((profile, index) => ({
+              ...profile,
+              stats: data[index].stats, // Only take the stats from cache
+            }));
+            setProfiles(restoredProfiles);
+            return;
+          }
+        } catch (e) {
+          console.error("Cache parsing error", e);
+          localStorage.removeItem(CACHE_KEY);
+        }
+      }
+
+      // 2. Prepare for Fetching (Clone properly to avoid mutating global var)
+      const updatedProfiles = initialProfiles.map((p) => ({
+        ...p,
+        stats: { ...p.stats },
+      }));
+
+      // Fetch LeetCode
+      try {
+        const lcRes = await fetch(
+          "https://leetcode-stats-api.herokuapp.com/Anish_Kumar_",
+        );
+        if (lcRes.ok) {
+          const lcData = await lcRes.json();
+          if (lcData.status === "success") {
+            updatedProfiles[0].stats = {
+              "Problems Solved": lcData.totalSolved || "N/A",
+              "Global Ranking": lcData.ranking || "N/A",
+              "Acceptance Rate": lcData.acceptanceRate
+                ? `${lcData.acceptanceRate}%`
+                : "N/A",
+            };
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch LeetCode:", error);
+      }
+
+      // Fetch Codeforces
+      try {
+        const cfRes = await fetch(
+          "https://codeforces.com/api/user.info?handles=Sarcastic-Soul",
+        );
+        const cfData = await cfRes.json();
+        if (cfData.status === "OK" && cfData.result.length > 0) {
+          const user = cfData.result[0];
+          updatedProfiles[1].stats = {
+            Rating: user.rating || "Unrated",
+            "Max Rating": user.maxRating || "Unrated",
+            Rank: user.rank ? user.rank.toUpperCase() : "Unrated",
+          };
+        }
+      } catch (error) {
+        console.error("Failed to fetch Codeforces:", error);
+      }
+
+      // Fetch GitHub
+      try {
+        const ghRes = await fetch(
+          "https://api.github.com/users/Sarcastic-Soul",
+        );
+        const ghData = await ghRes.json();
+
+        const contribRes = await fetch(
+          "https://github-contributions-api.jogruber.de/v4/Sarcastic-Soul?y=last",
+        );
+        const contribData = await contribRes.json();
+        const totalCommits = contribData?.total?.lastYear || "N/A";
+
+        if (ghData) {
+          updatedProfiles[2].stats = {
+            "Total Commits": totalCommits,
+            "Public Repos": ghData.public_repos || 0,
+            Followers: ghData.followers || 0,
+          };
+        }
+      } catch (error) {
+        console.error("Failed to fetch GitHub:", error);
+      }
+
+      // Update State
+      setProfiles(updatedProfiles);
+
+      // Save to Cache (Only stats will be valid JSON, icons are lost here)
+      localStorage.setItem(
+        CACHE_KEY,
+        JSON.stringify({ timestamp: Date.now(), data: updatedProfiles }),
+      );
+    }
+
+    fetchStats();
+  }, []);
+
   return (
-    <section id="coding" className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-12 bg-gray-50 dark:bg-gray-950">
+    <section
+      id="coding"
+      className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-12 bg-background"
+    >
       <div className="container mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-12 sm:mb-16 lg:mb-20"
-        >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-light tracking-tight mb-4 sm:mb-6">
+        <div className="text-center mb-12 sm:mb-16 lg:mb-20 animate-fade-in-up">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-light tracking-tight mb-4 sm:mb-6 text-foreground">
             Coding Profiles
           </h2>
-          <p className="text-base sm:text-lg lg:text-xl font-light text-gray-600 dark:text-gray-400 max-w-2xl mx-auto px-4">
-            My journey across different coding platforms, showcasing problem-solving skills and competitive programming
-            achievements.
+          <p className="text-base sm:text-lg lg:text-xl font-light text-muted-foreground max-w-2xl mx-auto px-4">
+            My competitive programming journey and problem-solving statistics
+            across various platforms.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {profiles.map((profile, index) => (
-            <motion.div
+            <div
               key={profile.platform}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.05, y: -5 }}
+              className="animate-fade-in-up transition-transform duration-300 hover:scale-105 hover:-translate-y-1"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <Card className="h-full hover:shadow-xl transition-all duration-300 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 rounded-2xl">
-                <CardContent className="p-4 sm:p-6">
-                  <div className="flex items-center mb-4">
-                    <div className="p-2 sm:p-3 bg-gray-100 dark:bg-gray-800 rounded-xl mr-3">
-                      <profile.icon className="h-5 w-5 sm:h-6 sm:w-6 text-black dark:text-white" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-base sm:text-lg">{profile.platform}</h3>
-                      <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{profile.username}</p>
+              <Card className="h-full hover:shadow-xl transition-all duration-300 bg-secondary/50 border-border rounded-2xl overflow-hidden group">
+                <CardContent className="p-6 sm:p-8 flex flex-col h-full">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 bg-background rounded-xl text-primary">
+                        {/* The fix ensures this is always a valid component now */}
+                        <profile.icon className="h-6 w-6" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground">
+                          {profile.platform}
+                        </h3>
+                        <p className="text-sm text-muted-foreground">
+                          @{profile.username}
+                        </p>
+                      </div>
                     </div>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-4 sm:mb-6 leading-relaxed">
-                    {profile.description}
-                  </p>
-
-                  <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
+                  <div className="space-y-4 mb-6 flex-grow">
                     {Object.entries(profile.stats).map(([key, value]) => (
-                      <div key={key} className="flex justify-between text-xs sm:text-sm">
-                        <span className="capitalize text-gray-500 dark:text-gray-400">{key}:</span>
-                        <span className="font-medium text-black dark:text-white">{value}</span>
+                      <div
+                        key={key}
+                        className="flex justify-between items-center text-sm"
+                      >
+                        <span className="text-muted-foreground">{key}</span>
+                        <span className="font-medium text-foreground">
+                          {value}
+                        </span>
                       </div>
                     ))}
                   </div>
 
                   <Button
                     variant="outline"
-                    size="sm"
-                    className="w-full bg-transparent border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full text-xs sm:text-sm"
+                    className="w-full border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
                     asChild
                   >
-                    <a href={profile.url} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                      View Profile
+                    <a
+                      href={profile.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View Profile <ExternalLink className="ml-2 h-4 w-4" />
                     </a>
                   </Button>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }

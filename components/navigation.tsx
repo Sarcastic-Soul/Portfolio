@@ -1,168 +1,285 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { Menu, X, Github, Linkedin, Mail } from "lucide-react"
-
-const navItems = [
-  { name: "About", href: "#about" },
-  { name: "Work", href: "#work" },
-  { name: "Skills", href: "#skills" },
-  { name: "Achievements", href: "#achievements" },
-  { name: "Coding", href: "#coding" },
-  { name: "Contact", href: "#contact" },
-]
-
-const socialLinks = [
-  { icon: Github, href: "https://github.com/Sarcastic-Soul", label: "GitHub" },
-  { icon: Linkedin, href: "https://www.linkedin.com/in/anish-kumar-852397290/", label: "LinkedIn" },
-  { icon: Mail, href: "mailto:anishisbusy@gmail.com", label: "Email" },
-]
+import * as React from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { Search, Home, Briefcase, Code2, Menu, X, Trophy } from "lucide-react";
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from "@/components/ui/command";
+import {
+  projects,
+  skillCategories,
+  achievements,
+  navItems,
+  socialLinks,
+} from "@/lib/data";
 
 export function Navigation() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState("")
+  const [open, setOpen] = React.useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [scrolled, setScrolled] = React.useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
-  useEffect(() => {
+  React.useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      setScrolled(window.scrollY > 50);
+    };
 
-      // Get all sections
-      const sections = navItems.map((item) => item.href.substring(1))
-      const scrollPosition = window.scrollY + 100
-
-      // Find current section
-      for (const section of sections) {
-        const element = document.getElementById(section)
-        if (element) {
-          const offsetTop = element.offsetTop
-          const offsetBottom = offsetTop + element.offsetHeight
-
-          if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
-            setActiveSection(section)
-            break
-          }
-        }
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setOpen((open) => !open);
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    handleScroll() // Call once to set initial state
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    document.addEventListener("keydown", down);
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-    }
-    setIsOpen(false)
-  }
+    // Initial check
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("keydown", down);
+    };
+  }, []);
+
+  const runCommand = React.useCallback((command: () => unknown) => {
+    setOpen(false);
+    command();
+  }, []);
+
+  // Breadcrumb Logic
+  const segments = pathname.split("/").filter(Boolean);
+  const breadcrumbs = [
+    { name: "~", href: "/" },
+    ...segments.map((segment, index) => {
+      const href = `/${segments.slice(0, index + 1).join("/")}`;
+      return { name: segment, href };
+    }),
+  ];
+
+  // Flatten skills for search
+  const allSkills = React.useMemo(() => {
+    return skillCategories.flatMap((cat) =>
+      cat.skills.map((skill) => ({ skill, category: cat.title })),
+    );
+  }, []);
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+      <nav
+        className={`fixed top-0 w-full z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-gray-200/20 dark:border-gray-800/20 shadow-lg shadow-black/5 dark:shadow-white/5"
+            ? "bg-background/80 backdrop-blur-xl border-b border-border shadow-sm"
             : "bg-transparent"
         }`}
       >
         <div className="container mx-auto px-6 lg:px-12">
           <div className="flex justify-between items-center h-20">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-2xl font-bold tracking-tight">
-              ANISH KUMAR
-            </motion.div>
-
-            <div className="hidden md:flex items-center space-x-8">
-              {navItems.map((item, index) => (
-                <motion.button
-                  key={item.name}
-                  onClick={() => scrollToSection(item.href)}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className={`text-sm font-medium tracking-wide transition-colors duration-300 relative group ${
-                    activeSection === item.href.substring(1)
-                      ? "text-black dark:text-white"
-                      : "text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white"
-                  }`}
-                >
-                  {item.name}
-                  <span
-                    className={`absolute -bottom-1 left-0 h-0.5 bg-black dark:bg-white transition-all duration-300 ${
-                      activeSection === item.href.substring(1) ? "w-full" : "w-0 group-hover:w-full"
+            {/* Left: Breadcrumbs */}
+            <div className="flex items-center space-x-2 text-sm sm:text-base font-medium font-mono shrink-0">
+              {breadcrumbs.map((crumb, index) => (
+                <React.Fragment key={crumb.href}>
+                  {index > 0 && (
+                    <span className="text-muted-foreground">/</span>
+                  )}
+                  <Link
+                    href={crumb.href}
+                    className={`transition-colors duration-200 ${
+                      index === breadcrumbs.length - 1
+                        ? "text-foreground font-bold"
+                        : "text-muted-foreground hover:text-foreground"
                     }`}
-                  ></span>
-                </motion.button>
+                  >
+                    {crumb.name}
+                  </Link>
+                </React.Fragment>
               ))}
-              <ThemeToggle />
             </div>
 
-            <div className="md:hidden flex items-center space-x-4">
+            {/* Right Side: Nav Links, Search, Theme, Mobile Menu */}
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              {/* Desktop Nav Links */}
+              <div className="hidden md:flex items-center space-x-6 mr-2">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`text-sm font-medium tracking-wide transition-colors duration-200 ${
+                      pathname === item.href
+                        ? "text-foreground font-semibold"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+
+              <Button
+                variant="outline"
+                size="sm"
+                className="text-muted-foreground hover:text-foreground border-border bg-transparent hidden sm:flex items-center gap-2 px-3 relative"
+                onClick={() => setOpen(true)}
+              >
+                <Search className="h-4 w-4" />
+                <span className="text-xs font-mono">Search...</span>
+                <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100">
+                  <span className="text-xs">⌘</span>K
+                </kbd>
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-muted-foreground hover:text-foreground sm:hidden"
+                onClick={() => setOpen(true)}
+              >
+                <Search className="h-5 w-5" />
+              </Button>
+
               <ThemeToggle />
-              <Button variant="ghost" size="sm" onClick={() => setIsOpen(!isOpen)} className="p-2 rounded-full">
-                {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden text-muted-foreground hover:text-foreground"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                {mobileMenuOpen ? (
+                  <X className="h-5 w-5" />
+                ) : (
+                  <Menu className="h-5 w-5" />
+                )}
               </Button>
             </div>
           </div>
         </div>
-      </motion.nav>
 
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-white dark:bg-black md:hidden"
-          >
-            <div className="flex flex-col items-center justify-center h-full space-y-8">
-              {navItems.map((item, index) => (
-                <motion.button
-                  key={item.name}
-                  onClick={() => scrollToSection(item.href)}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className={`text-3xl font-light tracking-wide transition-colors ${
-                    activeSection === item.href.substring(1)
-                      ? "text-black dark:text-white"
-                      : "text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white"
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-20 left-0 w-full bg-background border-b border-border p-4 shadow-lg animate-in slide-in-from-top-2">
+            <div className="flex flex-col space-y-4">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`text-base font-medium transition-colors duration-200 ${
+                    pathname === item.href
+                      ? "text-foreground font-semibold"
+                      : "text-muted-foreground hover:text-foreground"
                   }`}
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.name}
-                </motion.button>
+                </Link>
               ))}
-
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="flex space-x-6 mt-12"
-              >
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-3 border border-gray-200 dark:border-gray-800 rounded-full hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
-                  >
-                    <social.icon className="h-5 w-5" />
-                  </a>
-                ))}
-              </motion.div>
             </div>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
+      </nav>
+
+      {/* Command Palette */}
+      <CommandDialog open={open} onOpenChange={setOpen}>
+        <CommandInput
+          placeholder="Type a command or search..."
+          className="focus:ring-0 focus:border-none border-none ring-0 outline-none focus:outline-none"
+        />
+        <CommandList>
+          <CommandEmpty>No results found.</CommandEmpty>
+          <CommandGroup heading="Pages">
+            <CommandItem
+              onSelect={() => runCommand(() => router.push("/"))}
+              value="Home Page"
+            >
+              <Home className="mr-2 h-4 w-4" />
+              Home
+            </CommandItem>
+            <CommandItem
+              onSelect={() => runCommand(() => router.push("/projects"))}
+              value="Projects Page"
+            >
+              <Briefcase className="mr-2 h-4 w-4" />
+              Projects
+            </CommandItem>
+            <CommandItem
+              onSelect={() => runCommand(() => router.push("/skills"))}
+              value="Skills Page"
+            >
+              <Code2 className="mr-2 h-4 w-4" />
+              Skills
+            </CommandItem>
+          </CommandGroup>
+          <CommandSeparator />
+          <CommandGroup heading="Projects">
+            {projects.map((project) => (
+              <CommandItem
+                key={project.title}
+                onSelect={() => runCommand(() => router.push("/projects"))}
+                value={`${project.title} Project`}
+              >
+                <Briefcase className="mr-2 h-4 w-4" />
+                {project.title}
+              </CommandItem>
+            ))}
+          </CommandGroup>
+          <CommandSeparator />
+          <CommandGroup heading="Skills">
+            {allSkills.map(({ skill, category }) => (
+              <CommandItem
+                key={`${skill}-${category}`}
+                onSelect={() => runCommand(() => router.push("/skills"))}
+                value={`${skill} ${category}`}
+              >
+                <Code2 className="mr-2 h-4 w-4" />
+                {skill}
+                <span className="ml-2 text-xs text-muted-foreground">
+                  ({category})
+                </span>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+          <CommandSeparator />
+          <CommandGroup heading="Achievements">
+            {achievements.map((achievement) => (
+              <CommandItem
+                key={achievement.title}
+                onSelect={() => runCommand(() => router.push("/skills"))}
+                value={`${achievement.title} Achievement`}
+              >
+                <Trophy className="mr-2 h-4 w-4" />
+                {achievement.title}
+              </CommandItem>
+            ))}
+          </CommandGroup>
+          <CommandSeparator />
+          <CommandGroup heading="Socials">
+            {socialLinks.map((social) => (
+              <CommandItem
+                key={social.label}
+                onSelect={() =>
+                  runCommand(() => window.open(social.href, "_blank"))
+                }
+                value={`${social.label} Social`}
+              >
+                <social.icon className="mr-2 h-4 w-4" />
+                {social.label}
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        </CommandList>
+      </CommandDialog>
     </>
-  )
+  );
 }
