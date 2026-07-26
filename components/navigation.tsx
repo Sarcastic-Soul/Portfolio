@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Search, Home, Briefcase, Code2, Menu, X, Trophy, FileText, Terminal, Sparkles, TerminalSquare } from "lucide-react";
+import { Search, Home, Briefcase, Code2, Menu, X, Trophy, FileText, Terminal, Sparkles } from "lucide-react";
 import {
   CommandDialog,
   CommandEmpty,

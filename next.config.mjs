@@ -6,7 +6,6 @@ const basePath = isProd ? "/Portfolio" : "";
 const nextConfig = {
   basePath: basePath,
   output: "export",
-  distDir: "out",
   reactStrictMode: true,
   experimental: {
     optimizePackageImports: ["lucide-react", "@radix-ui/react-dialog", "@radix-ui/react-toast"],
