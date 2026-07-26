@@ -9,7 +9,7 @@ const nextConfig = {
   distDir: "out",
   reactStrictMode: true,
   experimental: {
-    optimizePackageImports: ["lucide-react"],
+    optimizePackageImports: ["lucide-react", "@radix-ui/react-dialog", "@radix-ui/react-toast"],
   },
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath,

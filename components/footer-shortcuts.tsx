@@ -47,6 +47,12 @@ export function FooterShortcuts() {
         router.push("/");
       }
 
+      // Navigate to Experience: Shift + E
+      if (e.shiftKey && e.key.toLowerCase() === "e") {
+        e.preventDefault();
+        router.push("/experience");
+      }
+
       // Navigate to Projects: Shift + P
       if (e.shiftKey && e.key.toLowerCase() === "p") {
         e.preventDefault();
@@ -66,6 +72,7 @@ export function FooterShortcuts() {
 
   const shortcuts = [
     { key: "Shift + H", description: "Go to Home" },
+    { key: "Shift + E", description: "Go to Experience" },
     { key: "Shift + P", description: "Go to Projects" },
     { key: "Shift + S", description: "Go to Skills" },
     { key: "Shift + T", description: "Toggle Theme" },

@@ -4,9 +4,12 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export const navItems = [
   { name: "Home", href: "/" },
+  { name: "Experience", href: "/experience" },
   { name: "Projects", href: "/projects" },
   { name: "Skills", href: "/skills" },
 ];
+
+export const RESUME_LINK = "https://drive.google.com/file/d/1C5Lt3JL2GDQHJha5d4Pp3h1uKCnQkfv2/view";
 
 export const socialLinks = [
   { icon: Github, href: "https://github.com/Sarcastic-Soul", label: "GitHub" },
@@ -18,77 +21,95 @@ export const socialLinks = [
   { icon: Mail, href: "mailto:anishisbusy@gmail.com", label: "Email" },
 ];
 
+export const experiences = [
+  {
+    company: "Samsung PRISM R&D Institute",
+    role: "R&D Intern",
+    location: "Bangalore, Karnataka",
+    period: "November 2025 – Present",
+    bullets: [
+      "Architected 'Guide Weave,' an AI-powered visual guide generator using a Multimodal RAG pipeline and ChromaDB to retrieve contextual text and extracted manual images.",
+      "Integrated a locally deployed LLM for secure generation and engineered custom benchmarking pipelines to optimize retrieval accuracy and minimize inference latency.",
+    ],
+    tech: ["Multimodal RAG", "ChromaDB", "Local LLM", "Python", "Benchmarking"],
+  },
+  {
+    company: "Aparsoft Private Limited",
+    role: "Software Engineering Intern",
+    location: "Bangalore, Karnataka (Remote)",
+    period: "June 2026 – Present",
+    bullets: [
+      "Contributing to an educational full-stack AI chatbot platform (Django REST Framework, Next.js, LangChain/LangGraph).",
+      "Debugging and resolving issues in the Next.js frontend within a RAG-based architecture using PostgreSQL (pgvector) and Redis.",
+    ],
+    tech: ["Next.js", "Django REST", "LangChain", "PostgreSQL (pgvector)", "Redis"],
+  },
+];
+
 export const projects = [
   {
     title: "MERN ChatApp",
+    category: "Full Stack",
     description:
-      "A real-time chat application with Socket.IO, featuring glassmorphism UI and comprehensive messaging features (Featured)",
-      image: `${basePath}/projects/mern-chat-app.png`,
-    technologies: ["Socket.IO", "React", "Express.js", "MongoDB", "Cloudinary"],
+      "A real-time chat platform with WebRTC video/voice calls, private/group messaging, media sharing, reactions, AI smart replies, and IndexedDB SWR caching (45% faster load).",
+    image: `${basePath}/projects/mern-chat-app.png`,
+    technologies: ["React", "Express.js", "MongoDB", "Socket.IO", "WebRTC", "Zustand", "IndexedDB"],
     github: "https://github.com/Sarcastic-Soul/socket-chat",
     demo: "https://socket-chat-nine-tau.vercel.app/",
   },
   {
-    title: "Converso - Voice LMS",
+    title: "SyllabAI",
+    category: "AI / RAG",
     description:
-      "A voice-based Learning Management System (LMS) for interactive learning experiences",
-    image: `${basePath}/projects/voice-lms.png`,
-    technologies: [
-      "Next.js",
-      "TypeScript",
-      "Supabase",
-      "Clerk",
-      "Google Gemini",
-    ],
-    github: "https://github.com/Sarcastic-Soul/Voice-LMS",
-    demo: "https://voice-lms.vercel.app/",
+      "An AI-powered course generator converting topics/PDFs into structured learning courses using Google Gemini API and Next.js Server Actions with PostgreSQL.",
+    image: `${basePath}/projects/pdf-chat-app.png`,
+    technologies: ["Next.js 16", "PostgreSQL (Neon)", "Drizzle ORM", "Clerk", "Gemini AI"],
+    github: "https://github.com/Sarcastic-Soul/SyllabAI",
+    demo: "https://syllab-ai-sarcastic-soul.vercel.app/",
   },
   {
-    title: "ASCII Art Generator",
-    description: "A tool for generating ASCII art from images.",
+    title: "Radish - In-Memory Database",
+    category: "Systems & Backend",
+    description:
+      "A Redis-compatible in-memory database built from scratch in Java using an event-driven I/O model (Java NIO Selector), custom RESP parser (~165K req/sec), and AOF persistence.",
     image: `${basePath}/projects/ascii-art.png`,
-    technologies: ["Next.js", "TypeScript", "NeonDB", "Clerk", "Drizzle ORM"],
-    github: "https://github.com/Sarcastic-Soul/ascii-art-saas",
-    demo: "https://ascii-art-saas.vercel.app/",
+    technologies: ["Java", "Java NIO", "RESP Protocol", "ConcurrentHashMap", "TCP Sockets", "AOF Persistence"],
+    github: "https://github.com/Sarcastic-Soul/Radish",
   },
   {
-    title: "Brutshop - E-commerce Platform",
+    title: "URL Shortener - Industry-Grade Platform",
+    category: "Systems & Backend",
     description:
-      " A Neo-brutalist e-commerce app built with Spring Boot and React",
+      "Full-stack URL shortening platform with Nginx load balancing (3 backend instances), MaxMind GeoIP2 analytics, Redis rate limiting, and Prometheus/Grafana observability.",
     image: `${basePath}/projects/springboot-ecommerce.png`,
-    technologies: ["Spring Boot", "React", "Supabase", "Cloudinary", "Docker"],
+    technologies: ["Spring Boot 3", "React", "PostgreSQL", "Redis", "Docker", "Nginx", "Prometheus", "Grafana"],
+    github: "https://github.com/Sarcastic-Soul/URL-Shortener",
+  },
+  {
+    title: "BrutShop - E-commerce Platform",
+    category: "Full Stack",
+    description:
+      "Neo-brutalist e-commerce platform with JWT-based RBAC, Razorpay payments, Redis caching (<200ms responses), Cloudinary media, and automated CI/CD pipelines.",
+    image: `${basePath}/projects/springboot-ecommerce.png`,
+    technologies: ["Spring Boot 3", "React", "PostgreSQL", "Redis", "Cloudinary", "Docker", "Razorpay"],
     github: "https://github.com/Sarcastic-Soul/E-commerce-Sprinboot",
     demo: "https://springboot-ecommerce-latest-ctgu.onrender.com/",
   },
   {
-    title: "AI PDF Chat App",
-    description: "AI chatbot for chatting with large PDFs using RAG.",
-    image: `${basePath}/projects/pdf-chat-app.png`,
-    technologies: [
-      "Deepseek",
-      "Qdrant",
-      "BullMQ",
-      "Next.js",
-      "TypeScript",
-      "ShadCN",
-    ],
-    github: "https://github.com/Sarcastic-Soul/AI-PDF-ChatApp",
-  },
-  {
-    title: "MindEase",
+    title: "Guide Weave (Samsung PRISM R&D)",
+    category: "AI / RAG",
     description:
-      "A mental health platform offering self-assessment tools, meditation resources, and AI-driven support.",
-    image: `${basePath}/projects/mindease.png`,
-    technologies: ["Next.js", "MongoDB", "Google Gemini"],
-    github: "https://github.com/Sarcastic-Soul/mindease",
-    demo: "https://mindease-ruddy.vercel.app/",
+      "AI-powered visual guide generator using a Multimodal RAG pipeline and ChromaDB with locally deployed LLMs and custom benchmarking pipelines.",
+    image: `${basePath}/projects/voice-lms.png`,
+    technologies: ["Multimodal RAG", "ChromaDB", "Local LLM", "Python", "Benchmarking Pipelines"],
+    github: "https://github.com/LakraAnshul/Samsung_Prism",
   },
 ];
 
 export const skillCategories = [
   {
     title: "Languages",
-    skills: ["JavaScript", "TypeScript", "Java", "Python", "HTML", "CSS", "SQL"],
+    skills: ["Java", "JavaScript", "TypeScript", "Python", "HTML", "CSS", "SQL", "MySQL"],
   },
   {
     title: "Frontend",
@@ -97,50 +118,113 @@ export const skillCategories = [
       "Next.js",
       "TypeScript",
       "Tailwind CSS",
-      "Framer Motion",
+      "Shadcn/UI",
       "Zustand",
-      "ShadCN",
+      "WebRTC",
+      "Socket.IO",
     ],
   },
   {
     title: "Backend",
     skills: [
-      "Node.js",
-      "Express",
       "Spring Boot",
-      "MongoDB",
-      "PostgreSQL",
-      "Supabase",
-      "Firebase",
-      "Appwrite",
+      "Spring Security",
+      "JPA/Hibernate",
+      "Node.js",
+      "Express.js",
+      "REST APIs",
+      "Django REST",
+      "LangChain/LangGraph",
+      "Kafka",
+      "RabbitMQ",
     ],
   },
   {
-    title: "Tools & Cloud",
+    title: "Databases",
     skills: [
-      "Git",
+      "MongoDB",
+      "PostgreSQL (pgvector)",
+      "Redis",
+      "Supabase",
+      "ChromaDB",
+      "Multimodal RAG",
+      "Drizzle ORM",
+      "NeonDB",
+    ],
+  },
+  {
+    title: "DevOps & Cloud",
+    skills: [
+      "AWS",
       "Docker",
       "Kubernetes",
-      "Clerk",
-      "Cloudinary",
-      "React Native",
+      "GCP",
+      "Terraform",
+      "Helm",
+      "Ansible",
+      "Jenkins",
+      "Nginx",
+      "Vercel",
+      "Ubuntu",
+      "Linux",
     ],
+  },
+  {
+    title: "Testing & Observability",
+    skills: [
+      "Postman",
+      "Vitest",
+      "JUnit/Mockito",
+      "Prometheus",
+      "Grafana",
+      "Loki",
+      "Datadog",
+      "K6",
+    ],
+  },
+  {
+    title: "Tools",
+    skills: ["Git", "Maven", "JWT", "Razorpay", "Cloudinary"],
   },
 ];
 
 export const achievements = [
   {
     icon: Trophy,
-    title: "Hackathon Winner",
-    description:
-      "2nd runner-up in E-cell Hackathon 2025 (Inter college Hackathon)",
-    category: "Competition",
+    title: "600+ DSA Problems Solved",
+    description: "Solved 600+ data structures and algorithms problems on LeetCode & Codeforces (1300+ rating).",
+    category: "Problem Solving",
   },
   {
     icon: Target,
-    title: "700+ Problems Solved",
-    description: "Solved over 700 problems on various coding platforms.",
-    category: "Problem Solving",
+    title: "Hackathon Winner",
+    description: "Won E-Cell Hackathon (inter-college), building competitive full-stack solutions under tight time constraints.",
+    category: "Competition",
+  },
+  {
+    icon: Code2,
+    title: "Coding Club Core Member",
+    description: "Organized a 3-day coding fest featuring 13 events with over 200+ active participants.",
+    category: "Leadership & POR",
+  },
+];
+
+export const certifications = [
+  {
+    icon: Trophy,
+    title: "Postman API Fundamentals Student Expert",
+    description: "Awarded Mar 7, 2025. Certification verifying expertise in API development, testing, and documentation with Postman.",
+    category: "Certification",
+    badgeImage: "https://api.badgr.io/public/assertions/LHO5EhdSTIaKZLaIcLUU9Q/image",
+    verifyUrl: "https://badgecheck.io?url=https%3A%2F%2Fapi.badgr.io%2Fpublic%2Fassertions%2FLHO5EhdSTIaKZLaIcLUU9Q%3Fidentity__email%3Danishisbusy%2540gmail.com&identity__email=anishisbusy@gmail.com",
+  },
+  {
+    icon: Trophy,
+    title: "Holopin Badges",
+    description: "Verified developer badges and open-source contributions on Holopin.",
+    category: "Open Source",
+    badgeImage: "https://holopin.me/sarcasticsoul",
+    verifyUrl: "https://holopin.io/@sarcasticsoul",
   },
 ];
 
@@ -152,7 +236,7 @@ export const codingProfiles = [
     stats: {
       "Problems Solved": "350+",
       "Global Rank": "Top 15%",
-      "Contest Rating": "1450",
+      "Contest Rating": "1450+",
     },
     link: "https://leetcode.com/u/Sarcastic_Soul/",
     color: "text-yellow-600 dark:text-yellow-500",
@@ -162,8 +246,8 @@ export const codingProfiles = [
     icon: Terminal,
     username: "Sarcastic_Soul",
     stats: {
-      Rating: "1000+",
-      Rank: "Newbie",
+      Rating: "1300+",
+      Rank: "Pupil / Contestant",
       "Problems Solved": "250+",
     },
     link: "https://codeforces.com/profile/Sarcastic_Soul",

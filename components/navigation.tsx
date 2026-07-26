@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Search, Home, Briefcase, Code2, Menu, X, Trophy } from "lucide-react";
+import { Search, Home, Briefcase, Code2, Menu, X, Trophy, FileText, Terminal, Sparkles, TerminalSquare } from "lucide-react";
 import {
   CommandDialog,
   CommandEmpty,
@@ -21,7 +21,9 @@ import {
   achievements,
   navItems,
   socialLinks,
+  RESUME_LINK,
 } from "@/lib/data";
+import { useToast } from "@/hooks/use-toast";
 
 export function Navigation() {
   const [open, setOpen] = React.useState(false);
@@ -29,6 +31,7 @@ export function Navigation() {
   const [scrolled, setScrolled] = React.useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  const { toast } = useToast();
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -207,6 +210,13 @@ export function Navigation() {
               Home
             </CommandItem>
             <CommandItem
+              onSelect={() => runCommand(() => router.push("/experience"))}
+              value="Experience Page"
+            >
+              <Briefcase className="mr-2 h-4 w-4" />
+              Experience
+            </CommandItem>
+            <CommandItem
               onSelect={() => runCommand(() => router.push("/projects"))}
               value="Projects Page"
             >
@@ -262,6 +272,63 @@ export function Navigation() {
                 {achievement.title}
               </CommandItem>
             ))}
+          </CommandGroup>
+          <CommandSeparator />
+          <CommandGroup heading="Quick Links">
+            <CommandItem
+              onSelect={() => runCommand(() => window.open(RESUME_LINK, "_blank"))}
+              value="Resume CV PDF"
+            >
+              <FileText className="mr-2 h-4 w-4" />
+              Resume
+            </CommandItem>
+          </CommandGroup>
+          <CommandSeparator />
+          <CommandGroup heading="Secret Commands (Easter Eggs)">
+            <CommandItem
+              onSelect={() =>
+                runCommand(() =>
+                  toast({
+                    title: "⚡ sudo hire-me",
+                    description: "Permission Granted! Contact anishisbusy@gmail.com to start building awesome software together.",
+                  })
+                )
+              }
+              value="sudo hire-me"
+            >
+              <Terminal className="mr-2 h-4 w-4 text-green-500" />
+              sudo hire-me
+            </CommandItem>
+
+            <CommandItem
+              onSelect={() =>
+                runCommand(() =>
+                  toast({
+                    title: "📖 cat philosophy.txt",
+                    description: "'First make it work, then make it right, then make it fast.' — Kent Beck",
+                  })
+                )
+              }
+              value="cat philosophy.txt"
+            >
+              <Terminal className="mr-2 h-4 w-4 text-yellow-500" />
+              cat philosophy.txt
+            </CommandItem>
+
+            <CommandItem
+              onSelect={() =>
+                runCommand(() =>
+                  toast({
+                    title: "🕶️ matrix mode",
+                    description: "You took the green pill! Welcome to the Gruvbox Matrix.",
+                  })
+                )
+              }
+              value="matrix"
+            >
+              <Sparkles className="mr-2 h-4 w-4 text-primary" />
+              matrix
+            </CommandItem>
           </CommandGroup>
           <CommandSeparator />
           <CommandGroup heading="Socials">

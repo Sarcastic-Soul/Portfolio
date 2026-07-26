@@ -1,5 +1,6 @@
 import { Separator } from "@/components/ui/separator";
 import { FooterShortcuts } from "@/components/footer-shortcuts";
+import { LastUpdated } from "@/components/last-updated";
 
 export function Footer() {
   return (
@@ -8,7 +9,10 @@ export function Footer() {
         <Separator className="mb-8 bg-border" />
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row text-sm text-muted-foreground font-mono">
           <p>© {new Date().getFullYear()} Anish Kumar. All rights reserved.</p>
-          <FooterShortcuts />
+          <div className="flex items-center gap-4">
+            <LastUpdated />
+            <FooterShortcuts />
+          </div>
         </div>
       </div>
     </footer>

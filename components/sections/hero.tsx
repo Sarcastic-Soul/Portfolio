@@ -1,17 +1,24 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Download, Mail, MapPin } from "lucide-react";
-import { socialLinks } from "@/lib/data";
+import { ExternalLink, Mail, MapPin } from "lucide-react";
+import { socialLinks, RESUME_LINK } from "@/lib/data";
+import { useToast } from "@/hooks/use-toast";
 
 export function Hero() {
+  const { toast } = useToast();
+
   const handleDownloadResume = () => {
-    const link = document.createElement("a");
-    link.href = `./Anish_Kumar_Resume.pdf`;
-    link.download = "Anish_Kumar_Resume.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    window.open(RESUME_LINK, "_blank", "noopener,noreferrer");
+  };
+
+  const handleCopyEmail = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigator.clipboard.writeText("anishisbusy@gmail.com");
+    toast({
+      title: "Email Copied!",
+      description: "anishisbusy@gmail.com has been copied to your clipboard.",
+    });
   };
 
   return (
@@ -20,7 +27,7 @@ export function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start lg:items-center">
           {/* Left Column: Identity */}
           <div className="space-y-8">
-            {/* --- NEW: Profile Image Section --- */}
+            {/* --- Profile Image Section --- */}
             <div className="relative w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56">
               <img
                 src={`./image.png`}
@@ -28,7 +35,6 @@ export function Hero() {
                 className="w-full h-full object-cover rounded-full border-4 border-primary shadow-xl"
               />
             </div>
-            {/* ---------------------------------- */}
 
             <div className="space-y-4">
               <h2 className="text-lg sm:text-xl font-mono tracking-widest text-primary uppercase">
@@ -40,8 +46,7 @@ export function Hero() {
             </div>
 
             <p className="text-xl sm:text-2xl font-light text-muted-foreground max-w-md leading-relaxed">
-              Crafting digital experiences with precision, purpose, and clean
-              code.
+              Crafting digital experiences with precision, purpose, and clean code.
             </p>
 
             <div className="pt-4">
@@ -50,8 +55,8 @@ export function Hero() {
                 size="lg"
                 className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 py-6 text-lg font-medium tracking-wide transition-all duration-300 shadow-lg hover:shadow-primary/20"
               >
-                <Download className="mr-3 h-5 w-5" />
-                Download Resume
+                <ExternalLink className="mr-3 h-5 w-5" />
+                View Resume
               </Button>
             </div>
           </div>
@@ -64,16 +69,10 @@ export function Hero() {
               </h3>
               <div className="space-y-4 text-base sm:text-lg text-muted-foreground leading-relaxed font-light">
                 <p>
-                  I&apos;m a dedicated student with over 2 years of experience
-                  studying and building web development projects. My journey has
-                  been driven by curiosity and a commitment to learning modern
-                  technologies.
+                  I&apos;m a dedicated B.Tech student at IIIT Naya Raipur with experience building full-stack applications, Redis-compatible in-memory databases, and Multimodal RAG pipelines.
                 </p>
                 <p>
-                  I focus on writing clean, maintainable code and crafting user
-                  experiences that are both intuitive and visually appealing.
-                  Each project helps me grow and refine my skills in web
-                  development.
+                  I focus on writing clean, maintainable code and crafting user experiences that are both intuitive and visually appealing.
                 </p>
               </div>
             </div>
@@ -86,12 +85,12 @@ export function Hero() {
                 </div>
                 <div className="flex items-center space-x-3 text-muted-foreground">
                   <Mail className="h-5 w-5 text-primary" />
-                  <a
-                    href="mailto:anishisbusy@gmail.com"
-                    className="text-lg hover:text-primary transition-colors"
+                  <button
+                    onClick={handleCopyEmail}
+                    className="text-lg hover:text-primary transition-colors text-left"
                   >
                     anishisbusy@gmail.com
-                  </a>
+                  </button>
                 </div>
               </div>
 
@@ -100,6 +99,7 @@ export function Hero() {
                   <a
                     key={link.label}
                     href={link.href}
+                    onClick={link.label === "Email" ? handleCopyEmail : undefined}
                     target={link.label === "Email" ? undefined : "_blank"}
                     rel={
                       link.label === "Email" ? undefined : "noopener noreferrer"

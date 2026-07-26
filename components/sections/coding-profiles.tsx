@@ -3,15 +3,24 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Code2, Terminal, Github } from "lucide-react";
+import { ExternalLink } from "lucide-react";
+import { TechIcon } from "@/components/tech-icon";
+
+interface Profile {
+  platform: string;
+  username: string;
+  link: string;
+  iconName: string;
+  stats: Record<string, string | number>;
+}
 
 // Initial static data
-const initialProfiles = [
+const initialProfiles: Profile[] = [
   {
     platform: "LeetCode",
     username: "Anish_Kumar_",
     link: "https://leetcode.com/u/Anish_Kumar_/",
-    icon: Code2,
+    iconName: "LeetCode",
     stats: {
       "Problems Solved": "Loading...",
       "Global Ranking": "Loading...",
@@ -22,7 +31,7 @@ const initialProfiles = [
     platform: "Codeforces",
     username: "Sarcastic-Soul",
     link: "https://codeforces.com/profile/Sarcastic-Soul",
-    icon: Terminal,
+    iconName: "Codeforces",
     stats: {
       Rating: "Loading...",
       "Max Rating": "Loading...",
@@ -33,7 +42,7 @@ const initialProfiles = [
     platform: "GitHub",
     username: "Sarcastic-Soul",
     link: "https://github.com/Sarcastic-Soul",
-    icon: Github,
+    iconName: "GitHub",
     stats: {
       "Total Commits": "Loading...",
       "Public Repos": "Loading...",
@@ -43,7 +52,7 @@ const initialProfiles = [
 ];
 
 export function CodingProfiles() {
-  const [profiles, setProfiles] = useState(initialProfiles);
+  const [profiles, setProfiles] = useState<Profile[]>(initialProfiles);
 
   useEffect(() => {
     async function fetchStats() {
@@ -179,9 +188,8 @@ export function CodingProfiles() {
                 <CardContent className="p-6 sm:p-8 flex flex-col h-full">
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-4">
-                      <div className="p-3 bg-background rounded-xl text-primary">
-                        {/* The fix ensures this is always a valid component now */}
-                        <profile.icon className="h-6 w-6" />
+                      <div className="p-3 bg-background rounded-xl text-primary flex items-center justify-center">
+                        <TechIcon name={profile.iconName} className="h-6 w-6" />
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold text-foreground">
