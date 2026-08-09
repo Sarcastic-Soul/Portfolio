@@ -241,9 +241,65 @@ html {
     @apply transition-all duration-300 hover:scale-105 active:scale-95;
 }
 
-/* Card hover effects */
+/* Card hover effects & film grain texture */
 .card-hover {
-    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden;
+}
+
+/* Film Grain Overlay */
+.card-grain {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Subtle Shining Light Hover Effect */
+.card-shine {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-shine::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    pointer-events: none;
+    background: linear-gradient(
+        45deg,
+        transparent 45%,
+        rgba(255, 255, 255, 0.12) 50%,
+        transparent 55%
+    );
+    transform: translateX(-100%) rotate(25deg);
+    transition: transform 0.75s ease-in-out;
+    z-index: 2;
+}
+
+.dark .card-shine::after {
+    background: linear-gradient(
+        45deg,
+        transparent 45%,
+        rgba(255, 255, 255, 0.08) 50%,
+        transparent 55%
+    );
+}
+
+.card-shine:hover::after {
+    transform: translateX(100%) rotate(25deg);
 }
 
 /* Text hover effects */

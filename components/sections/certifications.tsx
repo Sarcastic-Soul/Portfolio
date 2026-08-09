@@ -26,7 +26,7 @@ export function Certifications() {
               className="animate-fade-in-up transition-transform duration-300 hover:scale-105 hover:-translate-y-1"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <Card className="h-full text-center hover:shadow-xl transition-all duration-300 bg-secondary/50 border-border rounded-2xl flex flex-col justify-between">
+              <Card className="h-full text-center hover:shadow-xl transition-all duration-300 bg-secondary/50 border-border rounded-2xl flex flex-col justify-between card-grain card-shine">
                 <CardContent className="p-6 sm:p-8 flex flex-col items-center justify-between h-full space-y-4">
                   <div className="w-full flex flex-col items-center space-y-3">
                     {item.badgeImage && (

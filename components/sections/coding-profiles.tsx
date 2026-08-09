@@ -201,7 +201,7 @@ export function CodingProfiles() {
               className="animate-fade-in-up transition-transform duration-300 hover:scale-105 hover:-translate-y-1"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <Card className="h-full hover:shadow-xl transition-all duration-300 bg-secondary/50 border-border rounded-2xl overflow-hidden group">
+              <Card className="h-full hover:shadow-xl transition-all duration-300 bg-secondary/50 border-border rounded-2xl overflow-hidden group card-grain card-shine">
                 <CardContent className="p-6 sm:p-8 flex flex-col h-full">
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-4">

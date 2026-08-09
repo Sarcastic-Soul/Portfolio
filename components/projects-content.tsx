@@ -131,7 +131,7 @@ export function ProjectsContent() {
                     index % 2 === 1 ? "lg:col-start-1 lg:row-start-1" : ""
                   } transition-transform duration-300 hover:scale-[1.02]`}
                 >
-                  <Card className="border-0 shadow-lg overflow-hidden bg-muted rounded-2xl group">
+                  <Card className="border-0 shadow-lg overflow-hidden bg-muted rounded-2xl group card-grain card-shine">
                     <CardContent className="p-0">
                       <ProjectImage
                         src={project.image || "/placeholder.svg"}

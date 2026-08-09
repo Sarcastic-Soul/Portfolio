@@ -24,7 +24,7 @@ export function ExperienceContent() {
                   {/* Timeline Indicator Dot */}
                   <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full border-2 border-primary bg-background group-hover:bg-primary transition-colors duration-300 shadow-md" />
 
-                  <div className="p-6 sm:p-8 rounded-2xl border border-border/70 bg-card hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md space-y-4">
+                  <div className="p-6 sm:p-8 rounded-2xl border border-border/70 bg-card hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md space-y-4 card-grain card-shine">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border/50 pb-4">
                       <div>
                         <h3 className="text-xl sm:text-2xl font-semibold text-foreground flex items-center gap-2">
@@ -85,7 +85,7 @@ export function ExperienceContent() {
                   {/* Timeline Indicator Dot */}
                   <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full border-2 border-primary bg-primary shadow-md" />
 
-                  <div className="p-6 sm:p-8 rounded-2xl border border-border/70 bg-card hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md space-y-4">
+                  <div className="p-6 sm:p-8 rounded-2xl border border-border/70 bg-card hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md space-y-4 card-grain card-shine">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border/50 pb-4">
                       <div>
                         <h3 className="text-xl sm:text-2xl font-semibold text-foreground flex items-center gap-2">

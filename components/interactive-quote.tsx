@@ -24,7 +24,7 @@ export function InteractiveQuote() {
   return (
     <div
       onClick={handleCopy}
-      className="group relative cursor-pointer overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-card/80 via-secondary/30 to-card/90 p-6 sm:p-8 backdrop-blur-xl transition-all duration-500 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/15"
+      className="group relative cursor-pointer overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-card/80 via-secondary/30 to-card/90 p-6 sm:p-8 backdrop-blur-xl transition-all duration-500 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/15 card-grain card-shine"
     >
       {/* Animated Ambient Glow Backdrop */}
       <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-primary/10 blur-3xl transition-opacity duration-500 group-hover:opacity-100 opacity-50" />
