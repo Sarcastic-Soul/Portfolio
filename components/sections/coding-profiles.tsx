@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
-import { TechIcon } from "@/components/tech-icon";
+import { TechIcon } from "@/components/icons";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Profile {
   platform: string;
@@ -14,7 +15,7 @@ interface Profile {
   stats: Record<string, string | number>;
 }
 
-// Initial static data
+// Fallback static data
 const initialProfiles: Profile[] = [
   {
     platform: "LeetCode",
@@ -22,9 +23,9 @@ const initialProfiles: Profile[] = [
     link: "https://leetcode.com/u/Anish_Kumar_/",
     iconName: "LeetCode",
     stats: {
-      "Problems Solved": "Loading...",
-      "Global Ranking": "Loading...",
-      "Acceptance Rate": "Loading...",
+      "Problems Solved": "365+",
+      "Global Ranking": "359,102",
+      "Acceptance Rate": "62%",
     },
   },
   {
@@ -33,9 +34,9 @@ const initialProfiles: Profile[] = [
     link: "https://codeforces.com/profile/Sarcastic-Soul",
     iconName: "Codeforces",
     stats: {
-      Rating: "Loading...",
-      "Max Rating": "Loading...",
-      Rank: "Loading...",
+      Rating: "1300+",
+      "Max Rating": "1342",
+      Rank: "PUPIL",
     },
   },
   {
@@ -44,121 +45,137 @@ const initialProfiles: Profile[] = [
     link: "https://github.com/Sarcastic-Soul",
     iconName: "GitHub",
     stats: {
-      "Total Commits": "Loading...",
-      "Public Repos": "Loading...",
-      Followers: "Loading...",
+      "Total Commits": "500+",
+      "Public Repos": "25+",
+      Followers: "10+",
     },
   },
 ];
 
 export function CodingProfiles() {
   const [profiles, setProfiles] = useState<Profile[]>(initialProfiles);
+  const [loading, setLoading] = useState<Record<string, boolean>>({
+    LeetCode: true,
+    Codeforces: true,
+    GitHub: true,
+  });
 
   useEffect(() => {
-    async function fetchStats() {
-      const CACHE_KEY = "coding_profiles_stats";
-      const CACHE_DURATION = 1000 * 60 * 60; // 1 Hour
+    // 1. Fetch LeetCode
+    (async () => {
+      try {
+        const res = await fetch("https://leetcode-api-faisalshohag.vercel.app/Anish_Kumar_");
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.totalSolved !== undefined) {
+            const totalSolved = data.totalSolved;
+            const ranking = data.ranking ? `${data.ranking.toLocaleString()}` : "359,102";
+            const totalSub = data.totalSubmissions?.[0]?.submissions;
+            const acceptanceRate = totalSub
+              ? `${Math.round((totalSolved / totalSub) * 100)}%`
+              : "62%";
 
-      // 1. Check Cache
-      const cached = localStorage.getItem(CACHE_KEY);
-      if (cached) {
+            setProfiles((prev) =>
+              prev.map((p) =>
+                p.platform === "LeetCode"
+                  ? {
+                      ...p,
+                      stats: {
+                        "Problems Solved": `${totalSolved}+`,
+                        "Global Ranking": ranking,
+                        "Acceptance Rate": acceptanceRate,
+                      },
+                    }
+                  : p
+              )
+            );
+          }
+        }
+      } catch (err) {
+        console.warn("LeetCode fetch error:", err);
+      } finally {
+        setLoading((prev) => ({ ...prev, LeetCode: false }));
+      }
+    })();
+
+    // 2. Fetch Codeforces
+    (async () => {
+      try {
+        const res = await fetch("https://codeforces.com/api/user.info?handles=Sarcastic-Soul");
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.status === "OK" && data.result?.[0]) {
+            const user = data.result[0];
+            setProfiles((prev) =>
+              prev.map((p) =>
+                p.platform === "Codeforces"
+                  ? {
+                      ...p,
+                      stats: {
+                        Rating: user.rating || "Unrated",
+                        "Max Rating": user.maxRating || "Unrated",
+                        Rank: user.rank ? user.rank.toUpperCase() : "UNRATED",
+                      },
+                    }
+                  : p
+              )
+            );
+          }
+        }
+      } catch (err) {
+        console.warn("Codeforces fetch error:", err);
+      } finally {
+        setLoading((prev) => ({ ...prev, Codeforces: false }));
+      }
+    })();
+
+    // 3. Fetch GitHub
+    (async () => {
+      try {
+        const ghRes = await fetch("https://api.github.com/users/Sarcastic-Soul");
+        let publicRepos: string | number = "25+";
+        let followers: string | number = "10+";
+        if (ghRes.ok) {
+          const ghData = await ghRes.json();
+          if (ghData) {
+            publicRepos = ghData.public_repos ?? publicRepos;
+            followers = ghData.followers ?? followers;
+          }
+        }
+
+        let totalCommits = "500+";
         try {
-          const { timestamp, data } = JSON.parse(cached);
-          if (Date.now() - timestamp < CACHE_DURATION) {
-            // FIX: Merge cached stats with the static profiles (which have the icons)
-            const restoredProfiles = initialProfiles.map((profile, index) => ({
-              ...profile,
-              stats: data[index].stats, // Only take the stats from cache
-            }));
-            setProfiles(restoredProfiles);
-            return;
+          const contribRes = await fetch("https://github-contributions-api.jogruber.de/v4/Sarcastic-Soul?y=last");
+          if (contribRes.ok) {
+            const contribData = await contribRes.json();
+            if (contribData?.total?.lastYear !== undefined) {
+              totalCommits = `${contribData.total.lastYear}+`;
+            }
           }
-        } catch (e) {
-          console.error("Cache parsing error", e);
-          localStorage.removeItem(CACHE_KEY);
+        } catch {
+          // ignore
         }
-      }
 
-      // 2. Prepare for Fetching (Clone properly to avoid mutating global var)
-      const updatedProfiles = initialProfiles.map((p) => ({
-        ...p,
-        stats: { ...p.stats },
-      }));
-
-      // Fetch LeetCode
-      try {
-        const lcRes = await fetch(
-          "https://leetcode-stats-api.herokuapp.com/Anish_Kumar_",
+        setProfiles((prev) =>
+          prev.map((p) =>
+            p.platform === "GitHub"
+              ? {
+                  ...p,
+                  stats: {
+                    "Total Commits": totalCommits,
+                    "Public Repos": publicRepos,
+                    Followers: followers,
+                  },
+                }
+              : p
+          )
         );
-        if (lcRes.ok) {
-          const lcData = await lcRes.json();
-          if (lcData.status === "success") {
-            updatedProfiles[0].stats = {
-              "Problems Solved": lcData.totalSolved || "N/A",
-              "Global Ranking": lcData.ranking || "N/A",
-              "Acceptance Rate": lcData.acceptanceRate
-                ? `${lcData.acceptanceRate}%`
-                : "N/A",
-            };
-          }
-        }
-      } catch (error) {
-        console.error("Failed to fetch LeetCode:", error);
+      } catch (err) {
+        console.warn("GitHub fetch error:", err);
+      } finally {
+        setLoading((prev) => ({ ...prev, GitHub: false }));
       }
-
-      // Fetch Codeforces
-      try {
-        const cfRes = await fetch(
-          "https://codeforces.com/api/user.info?handles=Sarcastic-Soul",
-        );
-        const cfData = await cfRes.json();
-        if (cfData.status === "OK" && cfData.result.length > 0) {
-          const user = cfData.result[0];
-          updatedProfiles[1].stats = {
-            Rating: user.rating || "Unrated",
-            "Max Rating": user.maxRating || "Unrated",
-            Rank: user.rank ? user.rank.toUpperCase() : "Unrated",
-          };
-        }
-      } catch (error) {
-        console.error("Failed to fetch Codeforces:", error);
-      }
-
-      // Fetch GitHub
-      try {
-        const ghRes = await fetch(
-          "https://api.github.com/users/Sarcastic-Soul",
-        );
-        const ghData = await ghRes.json();
-
-        const contribRes = await fetch(
-          "https://github-contributions-api.jogruber.de/v4/Sarcastic-Soul?y=last",
-        );
-        const contribData = await contribRes.json();
-        const totalCommits = contribData?.total?.lastYear || "N/A";
-
-        if (ghData) {
-          updatedProfiles[2].stats = {
-            "Total Commits": totalCommits,
-            "Public Repos": ghData.public_repos || 0,
-            Followers: ghData.followers || 0,
-          };
-        }
-      } catch (error) {
-        console.error("Failed to fetch GitHub:", error);
-      }
-
-      // Update State
-      setProfiles(updatedProfiles);
-
-      // Save to Cache (Only stats will be valid JSON, icons are lost here)
-      localStorage.setItem(
-        CACHE_KEY,
-        JSON.stringify({ timestamp: Date.now(), data: updatedProfiles }),
-      );
-    }
-
-    fetchStats();
+    })();
   }, []);
 
   return (
@@ -209,9 +226,13 @@ export function CodingProfiles() {
                         className="flex justify-between items-center text-sm"
                       >
                         <span className="text-muted-foreground">{key}</span>
-                        <span className="font-medium text-foreground">
-                          {value}
-                        </span>
+                        {loading[profile.platform] ? (
+                          <Skeleton className="h-5 w-16" />
+                        ) : (
+                          <span className="font-medium text-foreground">
+                            {value}
+                          </span>
+                        )}
                       </div>
                     ))}
                   </div>

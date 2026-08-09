@@ -1,4 +1,5 @@
-import { Trophy, Target, Code2, Terminal, Cpu, Github, Linkedin, Mail } from "lucide-react";
+import { Trophy, Target, Code2, Terminal, Cpu, Mail } from "lucide-react";
+import { Github, Linkedin } from "@/components/icons";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
@@ -46,13 +47,29 @@ export const experiences = [
   },
 ];
 
+export const openSourceContributions = [
+  {
+    project: "Activity Frames",
+    repo: "nossa-y/activity-frames",
+    role: "Open Source Contributor",
+    location: "GitHub (Remote)",
+    period: "2026",
+    link: "https://github.com/nossa-y/activity-frames/",
+    bullets: [
+      "Contributed open-source code enhancements to 'activity-frames' (powering Nocta), compiling local screen activity into structured frames for AI agents.",
+      "Worked with Python, Model Context Protocol (MCP), and session compilation logic to enable zero-token workflow replay and agent context generation.",
+    ],
+    tech: ["Python", "MCP", "SQLite", "React", "TypeScript", "GitHub"],
+  },
+];
+
 export const projects = [
   {
     title: "MERN ChatApp",
     category: "Full Stack",
     description:
       "A real-time chat platform with WebRTC video/voice calls, private/group messaging, media sharing, reactions, AI smart replies, and IndexedDB SWR caching (45% faster load).",
-    image: `${basePath}/projects/mern-chat-app.png`,
+    image: "https://image.thum.io/get/width/800/https://socket-chat-nine-tau.vercel.app/",
     technologies: ["React", "Express.js", "MongoDB", "Socket.IO", "WebRTC", "Zustand", "IndexedDB"],
     github: "https://github.com/Sarcastic-Soul/socket-chat",
     demo: "https://socket-chat-nine-tau.vercel.app/",
@@ -62,7 +79,7 @@ export const projects = [
     category: "AI / RAG",
     description:
       "An AI-powered course generator converting topics/PDFs into structured learning courses using Google Gemini API and Next.js Server Actions with PostgreSQL.",
-    image: `${basePath}/projects/pdf-chat-app.png`,
+    image: "https://image.thum.io/get/width/800/https://syllab-ai-sarcastic-soul.vercel.app/",
     technologies: ["Next.js 16", "PostgreSQL (Neon)", "Drizzle ORM", "Clerk", "Gemini AI"],
     github: "https://github.com/Sarcastic-Soul/SyllabAI",
     demo: "https://syllab-ai-sarcastic-soul.vercel.app/",
@@ -72,7 +89,7 @@ export const projects = [
     category: "Systems & Backend",
     description:
       "A Redis-compatible in-memory database built from scratch in Java using an event-driven I/O model (Java NIO Selector), custom RESP parser (~165K req/sec), and AOF persistence.",
-    image: `${basePath}/projects/ascii-art.png`,
+    image: "https://image.thum.io/get/width/800/https://github.com/Sarcastic-Soul/Radish",
     technologies: ["Java", "Java NIO", "RESP Protocol", "ConcurrentHashMap", "TCP Sockets", "AOF Persistence"],
     github: "https://github.com/Sarcastic-Soul/Radish",
   },
@@ -81,16 +98,16 @@ export const projects = [
     category: "Systems & Backend",
     description:
       "Full-stack URL shortening platform with Nginx load balancing (3 backend instances), MaxMind GeoIP2 analytics, Redis rate limiting, and Prometheus/Grafana observability.",
-    image: `${basePath}/projects/springboot-ecommerce.png`,
+    image: "https://image.thum.io/get/width/800/https://github.com/Sarcastic-Soul/springboot-url-shortner",
     technologies: ["Spring Boot 3", "React", "PostgreSQL", "Redis", "Docker", "Nginx", "Prometheus", "Grafana"],
-    github: "https://github.com/Sarcastic-Soul/URL-Shortener",
+    github: "https://github.com/Sarcastic-Soul/springboot-url-shortner",
   },
   {
     title: "BrutShop - E-commerce Platform",
     category: "Full Stack",
     description:
       "Neo-brutalist e-commerce platform with JWT-based RBAC, Razorpay payments, Redis caching (<200ms responses), Cloudinary media, and automated CI/CD pipelines.",
-    image: `${basePath}/projects/springboot-ecommerce.png`,
+    image: "https://image.thum.io/get/width/800/https://springboot-ecommerce-latest-ctgu.onrender.com/",
     technologies: ["Spring Boot 3", "React", "PostgreSQL", "Redis", "Cloudinary", "Docker", "Razorpay"],
     github: "https://github.com/Sarcastic-Soul/E-commerce-Sprinboot",
     demo: "https://springboot-ecommerce-latest-ctgu.onrender.com/",
@@ -100,7 +117,7 @@ export const projects = [
     category: "AI / RAG",
     description:
       "AI-powered visual guide generator using a Multimodal RAG pipeline and ChromaDB with locally deployed LLMs and custom benchmarking pipelines.",
-    image: `${basePath}/projects/voice-lms.png`,
+    image: "https://image.thum.io/get/width/800/https://github.com/LakraAnshul/Samsung_Prism",
     technologies: ["Multimodal RAG", "ChromaDB", "Local LLM", "Python", "Benchmarking Pipelines"],
     github: "https://github.com/LakraAnshul/Samsung_Prism",
   },
@@ -210,6 +227,14 @@ export const achievements = [
 ];
 
 export const certifications = [
+  {
+    icon: Trophy,
+    title: "Oracle Data Platform 2025 Certified Foundations Associate",
+    description: "Official certification validating foundational knowledge of core Oracle Data Management services, databases, and cloud data solutions.",
+    category: "Oracle Certified",
+    badgeImage: "https://brm-workforce.oracle.com/pdf/certview/images/OCI25DCFAV2.png",
+    verifyUrl: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=5C0E219F2193E91F3B5F545705B067F53C473829CE03CA826F8762A832A2410A",
+  },
   {
     icon: Trophy,
     title: "Postman API Fundamentals Student Expert",

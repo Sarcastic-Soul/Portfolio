@@ -1,7 +1,7 @@
 "use client";
 
 import { skillCategories } from "@/lib/data";
-import { TechIcon } from "@/components/tech-icon";
+import { TechIcon } from "@/components/icons";
 
 export function Skills() {
   const topRowCategories = skillCategories.slice(0, 4);

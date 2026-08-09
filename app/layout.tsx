@@ -12,18 +12,26 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"] });
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export const metadata: Metadata = {
-  title: "Anish Kumar - Full Stack Developer",
+  metadataBase: new URL("https://sarcastic-soul.github.io/Portfolio/"),
+  title: {
+    default: "Anish Kumar | Full Stack & Systems Developer",
+    template: "%s | Anish Kumar",
+  },
   description:
-    "Portfolio of Anish Kumar, a passionate full-stack developer specializing in React, Node.js, and modern web technologies.",
+    "Portfolio of Anish Kumar, Full Stack & Systems Developer at IIIT Naya Raipur. Building scalable systems from scratch with minimal third-party dependencies.",
   keywords: [
+    "Anish Kumar",
     "Full Stack Developer",
+    "Systems Engineer",
+    "IIIT Naya Raipur",
+    "Java NIO",
+    "Spring Boot",
+    "Next.js",
     "React",
-    "Node.js",
-    "JavaScript",
     "TypeScript",
-    "Web Development",
+    "Open Source",
   ],
-  authors: [{ name: "Anish Kumar" }],
+  authors: [{ name: "Anish Kumar", url: "https://github.com/Sarcastic-Soul" }],
   creator: "Anish Kumar",
   icons: {
     icon: [
@@ -35,18 +43,29 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://anishkumar.dev",
-    title: "Anish Kumar - Full Stack Developer",
+    url: "https://sarcastic-soul.github.io/Portfolio/",
+    title: "Anish Kumar | Full Stack & Systems Developer",
     description:
-      "Portfolio of Anish Kumar, a passionate full-stack developer specializing in React, Node.js, and modern web technologies.",
+      "Portfolio of Anish Kumar, Full Stack & Systems Developer at IIIT Naya Raipur. Building scalable systems from scratch with minimal third-party dependencies.",
     siteName: "Anish Kumar Portfolio",
+    images: [
+      {
+        url: "https://image.thum.io/get/width/1200/crop/630/https://sarcastic-soul.github.io/Portfolio/",
+        width: 1200,
+        height: 630,
+        alt: "Anish Kumar Portfolio Live Preview",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Anish Kumar - Full Stack Developer",
+    title: "Anish Kumar | Full Stack & Systems Developer",
     description:
-      "Portfolio of Anish Kumar, a passionate full-stack developer specializing in React, Node.js, and modern web technologies.",
-    creator: "@anishkumar",
+      "Portfolio of Anish Kumar, Full Stack & Systems Developer at IIIT Naya Raipur. Building scalable systems from scratch with minimal third-party dependencies.",
+    images: [
+      "https://image.thum.io/get/width/1200/crop/630/https://sarcastic-soul.github.io/Portfolio/",
+    ],
+    creator: "@Sarcastic_Soul",
   },
 };
 
