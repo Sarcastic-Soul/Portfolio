@@ -102,13 +102,13 @@ export function Hero() {
             {/* Interactive Motto & Philosophy Quote */}
             <InteractiveQuote />
 
-            <div className="pt-2 w-full">
+            <div className="pt-2">
               <Button
                 onClick={handleDownloadResume}
                 size="lg"
-                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-8 py-6 text-lg font-medium tracking-wide transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-3"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 py-6 text-lg font-medium tracking-wide transition-all duration-300 shadow-lg hover:shadow-primary/20"
               >
-                <ExternalLink className="h-5 w-5" />
+                <ExternalLink className="mr-3 h-5 w-5" />
                 View Resume
               </Button>
             </div>
