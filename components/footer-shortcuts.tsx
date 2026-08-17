@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
+import { setThemeWithTransition } from "@/lib/theme-transition";
 import {
   Dialog,
   DialogContent,
@@ -17,7 +18,7 @@ import { HelpCircle } from "lucide-react";
 export function FooterShortcuts() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  const { setTheme, theme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -38,7 +39,7 @@ export function FooterShortcuts() {
       // Toggle Theme: Shift + T
       if (e.shiftKey && e.key.toLowerCase() === "t") {
         e.preventDefault();
-        setTheme(theme === "dark" ? "light" : "dark");
+        setThemeWithTransition(resolvedTheme === "dark" ? "light" : "dark", setTheme);
       }
 
       // Navigate to Home: Shift + H
@@ -68,7 +69,7 @@ export function FooterShortcuts() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [router, setTheme, theme]);
+  }, [router, setTheme, resolvedTheme]);
 
   const shortcuts = [
     { key: "Shift + H", description: "Go to Home" },

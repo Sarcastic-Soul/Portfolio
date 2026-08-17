@@ -96,7 +96,7 @@
     }
 
     body {
-        @apply bg-background text-foreground font-light transition-colors duration-300;
+        @apply bg-background text-foreground font-light;
         font-size: clamp(14px, 2.5vw, 16px);
         line-height: 1.6;
         font-family: "JetBrains Mono", monospace;
@@ -332,12 +332,37 @@ html {
     @apply animate-pulse;
 }
 
-/* Dark mode transitions */
-* {
-    transition:
-        background-color 0.3s ease,
-        border-color 0.3s ease,
-        color 0.3s ease;
+/* Theme switching is handled by a View Transition cross-fade (see
+   lib/theme-transition.ts), not per-element transitions. Animating colors on
+   `*` meant every element on the page repainted each frame during a swap,
+   which is what made it stutter. */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 0.35s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    /* Both snapshots share the same pixels, so let them blend rather than
+       compositing one opaque layer over the other. */
+    mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+    animation-name: theme-fade-out;
+}
+
+::view-transition-new(root) {
+    animation-name: theme-fade-in;
+}
+
+@keyframes theme-fade-out {
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes theme-fade-in {
+    from {
+        opacity: 0;
+    }
 }
 
 /* Custom form styles */
@@ -466,6 +491,11 @@ textarea:focus {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+    }
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none !important;
     }
 }
 

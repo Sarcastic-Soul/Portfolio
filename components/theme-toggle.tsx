@@ -1,55 +1,35 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
+import { setThemeWithTransition } from "@/lib/theme-transition";
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    // Check for saved theme preference or default to system preference
-    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
-    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-    const initialTheme = savedTheme || systemTheme;
+  useEffect(() => setMounted(true), []);
 
-    setTheme(initialTheme);
-
-    // Apply theme to document
-    if (initialTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-
-    // Apply theme to document
-    if (newTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  };
+  const isDark = resolvedTheme === "dark";
 
   return (
     <Button
       variant="ghost"
       size="sm"
-      onClick={toggleTheme}
+      onClick={() => setThemeWithTransition(isDark ? "light" : "dark", setTheme)}
       className="rounded-full p-2 hover:bg-muted transition-colors"
       aria-label="Toggle Theme"
     >
-      {theme === "light" ? (
-        <Moon className="h-4 w-4 text-foreground" />
-      ) : (
+      {/* The resolved theme is unknown until mount, so hold the space to keep
+          the icon from popping in at a different size after hydration. */}
+      {!mounted ? (
+        <span className="h-4 w-4" />
+      ) : isDark ? (
         <Sun className="h-4 w-4 text-foreground" />
+      ) : (
+        <Moon className="h-4 w-4 text-foreground" />
       )}
     </Button>
   );
