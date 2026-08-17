@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prebuild": "node -e \"require('fs').writeFileSync('public/metadata.json', JSON.stringify({ lastUpdated: new Date().toISOString() }, null, 2) + '\\n')\"",
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",

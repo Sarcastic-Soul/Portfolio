@@ -87,6 +87,8 @@ jobs:
         run: |
           echo "{\"lastUpdated\": \"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"}" > public/metadata.json
       - name: Build with Next.js
+        env:
+          GITHUB_PAGES: "true"
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
