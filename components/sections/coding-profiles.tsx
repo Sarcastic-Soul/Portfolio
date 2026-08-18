@@ -63,17 +63,35 @@ export function CodingProfiles() {
   useEffect(() => {
     // 1. Fetch LeetCode
     (async () => {
+      // Free-tier host, so cold starts are common. Cap the wait and keep the
+      // static numbers rather than leaving the skeleton up indefinitely.
+      const signal = AbortSignal.timeout(10000);
+      const api = "https://alfa-leetcode-api.onrender.com/";
+
       try {
-        const res = await fetch("https://leetcode-api-faisalshohag.vercel.app/Anish_Kumar_");
+        const res = await fetch(`${api}userProfile/Anish_Kumar_`, { signal });
         if (res.ok) {
           const data = await res.json();
           if (data && data.totalSolved !== undefined) {
             const totalSolved = data.totalSolved;
             const ranking = data.ranking ? `${data.ranking.toLocaleString()}` : "359,102";
-            const totalSub = data.totalSubmissions?.[0]?.submissions;
-            const acceptanceRate = totalSub
-              ? `${Math.round((totalSolved / totalSub) * 100)}%`
-              : "62%";
+
+            // Acceptance rate needs the accepted-vs-total submission split, which
+            // only /solved reports; /userProfile carries the totals but not the split.
+            let acceptanceRate = "62%";
+            try {
+              const solvedRes = await fetch(`${api}Anish_Kumar_/solved`, { signal });
+              if (solvedRes.ok) {
+                const solved = await solvedRes.json();
+                const accepted = solved?.acSubmissionNum?.[0]?.submissions;
+                const total = solved?.totalSubmissionNum?.[0]?.submissions;
+                if (accepted && total) {
+                  acceptanceRate = `${Math.round((accepted / total) * 100)}%`;
+                }
+              }
+            } catch {
+              // keep the fallback
+            }
 
             setProfiles((prev) =>
               prev.map((p) =>
