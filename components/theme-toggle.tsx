@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
-import { Moon, Sun } from "lucide-react";
+import { MoonIcon as Moon, SunIcon as Sun } from "@phosphor-icons/react/ssr";
 import { setThemeWithTransition } from "@/lib/theme-transition";
 
 export function ThemeToggle() {
@@ -19,8 +19,8 @@ export function ThemeToggle() {
       variant="ghost"
       size="sm"
       onClick={() => setThemeWithTransition(isDark ? "light" : "dark", setTheme)}
-      className="rounded-full p-2 hover:bg-muted transition-colors"
-      aria-label="Toggle Theme"
+      className="h-11 w-11 rounded-md p-0 hover:bg-muted transition-colors sm:h-9 sm:w-9"
+      aria-label={mounted && isDark ? "Switch to light theme" : "Switch to dark theme"}
     >
       {/* The resolved theme is unknown until mount, so hold the space to keep
           the icon from popping in at a different size after hydration. */}

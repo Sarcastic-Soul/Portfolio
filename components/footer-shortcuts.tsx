@@ -13,7 +13,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { HelpCircle } from "lucide-react";
+import { KeyboardIcon } from "@phosphor-icons/react/ssr";
 
 export function FooterShortcuts() {
   const [open, setOpen] = useState(false);
@@ -88,9 +88,9 @@ export function FooterShortcuts() {
           <Button
             variant="outline"
             size="icon"
-            className="rounded-full h-8 w-8 bg-background border-border hover:bg-muted"
+            className="h-10 w-10 rounded-md border-border bg-background hover:bg-muted"
           >
-            <HelpCircle className="h-5 w-5" />
+            <KeyboardIcon className="h-4 w-4" />
             <span className="sr-only">Keyboard Shortcuts</span>
           </Button>
         </DialogTrigger>
@@ -98,7 +98,7 @@ export function FooterShortcuts() {
           <DialogHeader>
             <DialogTitle>Keyboard Shortcuts</DialogTitle>
             <DialogDescription>
-              Quickly navigate and control the portfolio using these shortcuts.
+              Move around the site without the mouse.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">

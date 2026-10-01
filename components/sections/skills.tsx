@@ -2,79 +2,41 @@
 
 import { skillCategories } from "@/lib/data";
 import { TechIcon } from "@/components/icons";
+import { SectionHeading } from "@/components/sections/section-heading";
 
 export function Skills() {
-  const topRowCategories = skillCategories.slice(0, 4);
-  const bottomRowCategories = skillCategories.slice(4, 7);
-
   return (
-    <section
-      id="skills"
-      className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-12 bg-background"
-    >
-      <div className="container mx-auto">
-        <div className="text-center mb-12 sm:mb-16 lg:mb-20 animate-fade-in-up">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-light tracking-tight mb-4 sm:mb-6 text-foreground">
-            Skills & Expertise
-          </h2>
-          <p className="text-base sm:text-lg lg:text-xl font-light text-muted-foreground max-w-2xl mx-auto px-4">
-            A comprehensive toolkit refined through years of hands-on experience.
-          </p>
-        </div>
+    <section id="skills" className="px-4 pb-20 pt-32 sm:px-6 lg:px-12 lg:pt-40">
+      <div className="container mx-auto max-w-7xl">
+        <SectionHeading
+          as="h1"
+          command="cat skills.txt"
+          title="Skills"
+          intro="What I reach for, grouped by where it sits in the stack."
+        />
 
-        <div className="space-y-12 sm:space-y-16">
-          {/* Top Row: 4 Categories */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 items-stretch">
-            {topRowCategories.map((category, categoryIndex) => (
-              <div
-                key={category.title}
-                className="animate-fade-in-up flex flex-col h-full space-y-4"
-                style={{ animationDelay: `${categoryIndex * 0.08}s` }}
-              >
-                <h3 className="text-xl sm:text-2xl font-light tracking-tight border-b border-border pb-3 text-foreground">
-                  {category.title}
-                </h3>
-                <div className="space-y-3 flex-grow">
+        <dl className="border-t border-border">
+          {skillCategories.map((category) => (
+            <div
+              key={category.title}
+              className="grid grid-cols-1 gap-3 border-b border-border/60 py-5 md:grid-cols-12 md:gap-8"
+            >
+              <dt className="text-sm text-brand md:col-span-3 md:pt-0.5">
+                {category.title.toLowerCase()}
+              </dt>
+              <dd className="md:col-span-9">
+                <ul className="flex flex-wrap gap-x-5 gap-y-2.5">
                   {category.skills.map((skill) => (
-                    <div
-                      key={skill}
-                      className="flex items-center gap-2.5 text-base font-light text-muted-foreground hover:text-primary transition-colors cursor-default"
-                    >
-                      <TechIcon name={skill} className="w-5 h-5 shrink-0" />
+                    <li key={skill} className="inline-flex items-center gap-2 text-foreground">
+                      <TechIcon name={skill} className="h-4 w-4 shrink-0" />
                       <span>{skill}</span>
-                    </div>
+                    </li>
                   ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Bottom Row: 3 Categories */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12 items-stretch">
-            {bottomRowCategories.map((category, categoryIndex) => (
-              <div
-                key={category.title}
-                className="animate-fade-in-up flex flex-col h-full space-y-4"
-                style={{ animationDelay: `${(categoryIndex + 4) * 0.08}s` }}
-              >
-                <h3 className="text-xl sm:text-2xl font-light tracking-tight border-b border-border pb-3 text-foreground">
-                  {category.title}
-                </h3>
-                <div className="space-y-3 flex-grow">
-                  {category.skills.map((skill) => (
-                    <div
-                      key={skill}
-                      className="flex items-center gap-2.5 text-base font-light text-muted-foreground hover:text-primary transition-colors cursor-default"
-                    >
-                      <TechIcon name={skill} className="w-5 h-5 shrink-0" />
-                      <span>{skill}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+                </ul>
+              </dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );

@@ -28,7 +28,7 @@
 
         --muted: 40 39% 73%;
         /* fg4: #7c6f64 */
-        --muted-foreground: 22 10% 44%;
+        --muted-foreground: 26 9% 36%;
 
         --accent: 40 39% 73%;
         --accent-foreground: 0 0% 16%;
@@ -44,7 +44,15 @@
         /* gray: #928374 */
         --ring: 22 12% 51%;
 
-        --radius: 0.5rem;
+        /* faded orange: #af3a03 - the one accent */
+        --brand: 19 97% 33%;
+        /* faded green / yellow: terminal output only */
+        --term-ok: 59 79% 22%;
+        --term-dim: 26 9% 36%;
+        /* bg0_h: #f9f5d7, used for terminal and frame surfaces */
+        --surface: 51 74% 91%;
+
+        --radius: 0.375rem;
     }
 
     .dark {
@@ -87,6 +95,14 @@
 
         /* gray: #928374 */
         --ring: 22 12% 51%;
+
+        /* bright orange: #fe8019 */
+        --brand: 27 99% 55%;
+        /* bright green: #b8bb26 */
+        --term-ok: 61 66% 44%;
+        --term-dim: 30 14% 63%;
+        /* bg0_h: #1d2021 */
+        --surface: 195 6% 12%;
     }
 }
 
@@ -150,7 +166,25 @@ html {
 
 /* Focus styles */
 :focus-visible {
-    @apply outline-none ring-1 ring-ring ring-offset-2 ring-offset-background;
+    @apply outline-none ring-2 ring-brand ring-offset-2 ring-offset-background;
+}
+
+/* Blinking block cursor for terminal-style headings */
+.cursor-block::after {
+    content: "";
+    display: inline-block;
+    width: 0.55em;
+    height: 1em;
+    margin-left: 0.15em;
+    vertical-align: -0.12em;
+    background-color: hsl(var(--brand));
+    animation: cursor-blink 1.1s steps(1) infinite;
+}
+
+@keyframes cursor-blink {
+    50% {
+        opacity: 0;
+    }
 }
 
 /* Typography improvements */
@@ -160,12 +194,7 @@ html {
 
 /* Selection styles */
 ::selection {
-    @apply bg-primary text-primary-foreground;
-}
-
-/* Glassmorphism effect */
-.glass {
-    @apply bg-background/80 backdrop-blur-xl border border-border shadow-lg;
+    @apply bg-brand text-background;
 }
 
 /* Custom animations */
@@ -205,20 +234,6 @@ html {
     }
 }
 
-@keyframes pulse-glow {
-
-    0%,
-    100% {
-        opacity: 0.5;
-        transform: scale(1);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scale(1.1);
-    }
-}
-
 /* Utility classes */
 .animate-fade-in-up {
     animation: fade-in-up 0.6s ease-out both;
@@ -232,18 +247,10 @@ html {
     animation: slide-in-right 0.6s ease-out both;
 }
 
-.animate-pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
-}
-
-/* Button hover effects */
-.btn-hover {
-    @apply transition-all duration-300 hover:scale-105 active:scale-95;
-}
 
 /* Card hover effects & film grain texture */
 .card-hover {
-    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden;
+    @apply transition-colors duration-300 hover:border-brand/60 relative overflow-hidden;
 }
 
 /* Film Grain Overlay */
@@ -305,31 +312,6 @@ html {
 /* Text hover effects */
 .text-hover {
     @apply transition-colors duration-300 hover:text-primary;
-}
-
-/* Border animations */
-.border-animate {
-    position: relative;
-}
-
-.border-animate::after {
-    content: "";
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background-color: currentColor;
-    transition: width 0.3s ease;
-}
-
-.border-animate:hover::after {
-    width: 100%;
-}
-
-/* Loading states */
-.loading {
-    @apply animate-pulse;
 }
 
 /* Theme switching is handled by a View Transition cross-fade (see
@@ -539,35 +521,6 @@ textarea:focus {
 
 .backdrop-blur-3xl {
     backdrop-filter: blur(32px);
-}
-
-/* Custom gradient backgrounds */
-.gradient-radial {
-    background: radial-gradient(circle, var(--tw-gradient-stops));
-}
-
-.gradient-conic {
-    background: conic-gradient(from 180deg at 50% 50%,
-            var(--tw-gradient-stops));
-}
-
-/* Text gradient utilities */
-.text-gradient {
-    background: linear-gradient(135deg,
-            currentColor 0%,
-            var(--tw-gradient-stops) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.dark .text-gradient {
-    background: linear-gradient(135deg,
-            currentColor 0%,
-            var(--tw-gradient-stops) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 /* Image responsive utilities */

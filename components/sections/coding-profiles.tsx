@@ -1,11 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
+import { ArrowUpRightIcon } from "@phosphor-icons/react/ssr";
 import { TechIcon } from "@/components/icons";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SectionHeading } from "@/components/sections/section-heading";
 
 interface Profile {
   platform: string;
@@ -197,79 +196,48 @@ export function CodingProfiles() {
   }, []);
 
   return (
-    <section
-      id="coding"
-      className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-12 bg-background"
-    >
-      <div className="container mx-auto">
-        <div className="text-center mb-12 sm:mb-16 lg:mb-20 animate-fade-in-up">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-light tracking-tight mb-4 sm:mb-6 text-foreground">
-            Coding Profiles
-          </h2>
-          <p className="text-base sm:text-lg lg:text-xl font-light text-muted-foreground max-w-2xl mx-auto px-4">
-            My competitive programming journey and problem-solving statistics
-            across various platforms.
-          </p>
-        </div>
+    <section id="coding" className="px-4 py-20 sm:px-6 lg:px-12">
+      <div className="container mx-auto max-w-7xl">
+        <SectionHeading
+          command="curl stats"
+          title="Coding profiles"
+          intro="Live numbers, pulled from each site when the page loads."
+        />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {profiles.map((profile, index) => (
+        <div className="grid grid-cols-1 border-t border-border md:grid-cols-3">
+          {profiles.map((profile) => (
             <div
               key={profile.platform}
-              className="animate-fade-in-up transition-transform duration-300 hover:scale-105 hover:-translate-y-1"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className="flex flex-col gap-5 border-b border-border/60 py-8 md:border-b-0 md:border-r md:px-8 md:first:pl-0 md:last:border-r-0"
             >
-              <Card className="h-full hover:shadow-xl transition-all duration-300 bg-secondary/50 border-border rounded-2xl overflow-hidden group card-grain card-shine">
-                <CardContent className="p-6 sm:p-8 flex flex-col h-full">
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-4">
-                      <div className="p-3 bg-background rounded-xl text-primary flex items-center justify-center">
-                        <TechIcon name={profile.iconName} className="h-6 w-6" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground">
-                          {profile.platform}
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          @{profile.username}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+              <div className="flex items-center gap-3">
+                <TechIcon name={profile.iconName} className="h-6 w-6" />
+                <div>
+                  <h3 className="text-lg font-bold text-foreground">{profile.platform}</h3>
+                  <p className="text-sm text-muted-foreground">@{profile.username}</p>
+                </div>
+              </div>
 
-                  <div className="space-y-4 mb-6 flex-grow">
-                    {Object.entries(profile.stats).map(([key, value]) => (
-                      <div
-                        key={key}
-                        className="flex justify-between items-center text-sm"
-                      >
-                        <span className="text-muted-foreground">{key}</span>
-                        {loading[profile.platform] ? (
-                          <Skeleton className="h-5 w-16" />
-                        ) : (
-                          <span className="font-medium text-foreground">
-                            {value}
-                          </span>
-                        )}
-                      </div>
-                    ))}
+              <dl className="flex-grow space-y-2.5 text-sm">
+                {Object.entries(profile.stats).map(([key, value]) => (
+                  <div key={key} className="flex items-baseline justify-between gap-4">
+                    <dt className="text-muted-foreground">{key.toLowerCase()}</dt>
+                    <dd className="text-foreground">
+                      {loading[profile.platform] ? <Skeleton className="h-5 w-16" /> : value}
+                    </dd>
                   </div>
+                ))}
+              </dl>
 
-                  <Button
-                    variant="outline"
-                    className="w-full border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
-                    asChild
-                  >
-                    <a
-                      href={profile.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      View Profile <ExternalLink className="ml-2 h-4 w-4" />
-                    </a>
-                  </Button>
-                </CardContent>
-              </Card>
+              <a
+                href={profile.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-fit items-center gap-1.5 text-sm text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-brand"
+              >
+                View profile
+                <ArrowUpRightIcon className="h-4 w-4" />
+              </a>
             </div>
           ))}
         </div>

@@ -5,7 +5,18 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Search, Home, Briefcase, Code2, Menu, X, Trophy, FileText, Terminal, Sparkles } from "lucide-react";
+import {
+  MagnifyingGlassIcon as Search,
+  HouseIcon as Home,
+  BriefcaseIcon as Briefcase,
+  FolderIcon as Folder,
+  CodeIcon as Code,
+  ListIcon as Menu,
+  XIcon as X,
+  TrophyIcon as Trophy,
+  FileTextIcon as FileText,
+  TerminalIcon as Terminal,
+} from "@phosphor-icons/react/ssr";
 import {
   CommandDialog,
   CommandEmpty,
@@ -84,7 +95,7 @@ export function Navigation() {
       <nav
         className={`fixed top-0 w-full z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-background/80 backdrop-blur-xl border-b border-border shadow-sm"
+            ? "bg-background border-b border-border"
             : "bg-transparent"
         }`}
       >
@@ -119,10 +130,10 @@ export function Navigation() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`text-sm font-medium tracking-wide transition-colors duration-200 ${
+                    className={`border-b-2 py-1 text-sm transition-colors duration-200 ${
                       pathname === item.href
-                        ? "text-foreground font-semibold"
-                        : "text-muted-foreground hover:text-foreground"
+                        ? "border-brand text-foreground"
+                        : "border-transparent text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     {item.name}
@@ -146,8 +157,9 @@ export function Navigation() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-muted-foreground hover:text-foreground sm:hidden"
+                className="h-11 w-11 text-muted-foreground hover:text-foreground sm:hidden"
                 onClick={() => setOpen(true)}
+                aria-label="Search"
               >
                 <Search className="h-5 w-5" />
               </Button>
@@ -157,8 +169,10 @@ export function Navigation() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden text-muted-foreground hover:text-foreground"
+                className="h-11 w-11 md:hidden text-muted-foreground hover:text-foreground"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={mobileMenuOpen}
               >
                 {mobileMenuOpen ? (
                   <X className="h-5 w-5" />
@@ -172,16 +186,16 @@ export function Navigation() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden absolute top-20 left-0 w-full bg-background border-b border-border p-4 shadow-lg animate-in slide-in-from-top-2">
-            <div className="flex flex-col space-y-4">
+          <div className="md:hidden absolute top-20 left-0 w-full bg-background border-b border-border px-4 py-2 animate-in slide-in-from-top-2">
+            <div className="flex flex-col">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-base font-medium transition-colors duration-200 ${
+                  className={`border-l-2 py-3 pl-3 text-base transition-colors duration-200 ${
                     pathname === item.href
-                      ? "text-foreground font-semibold"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "border-brand text-foreground"
+                      : "border-transparent text-muted-foreground hover:text-foreground"
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
@@ -220,14 +234,14 @@ export function Navigation() {
               onSelect={() => runCommand(() => router.push("/projects"))}
               value="Projects Page"
             >
-              <Briefcase className="mr-2 h-4 w-4" />
+              <Folder className="mr-2 h-4 w-4" />
               Projects
             </CommandItem>
             <CommandItem
               onSelect={() => runCommand(() => router.push("/skills"))}
               value="Skills Page"
             >
-              <Code2 className="mr-2 h-4 w-4" />
+              <Code className="mr-2 h-4 w-4" />
               Skills
             </CommandItem>
           </CommandGroup>
@@ -236,10 +250,10 @@ export function Navigation() {
             {projects.map((project) => (
               <CommandItem
                 key={project.title}
-                onSelect={() => runCommand(() => router.push("/projects"))}
-                value={`${project.title} Project`}
+                onSelect={() => runCommand(() => router.push(`/projects#${project.slug}`))}
+                value={`${project.title} ${project.category} Project`}
               >
-                <Briefcase className="mr-2 h-4 w-4" />
+                <Folder className="mr-2 h-4 w-4" />
                 {project.title}
               </CommandItem>
             ))}
@@ -252,7 +266,7 @@ export function Navigation() {
                 onSelect={() => runCommand(() => router.push("/skills"))}
                 value={`${skill} ${category}`}
               >
-                <Code2 className="mr-2 h-4 w-4" />
+                <Code className="mr-2 h-4 w-4" />
                 {skill}
                 <span className="ml-2 text-xs text-muted-foreground">
                   ({category})
@@ -289,14 +303,14 @@ export function Navigation() {
               onSelect={() =>
                 runCommand(() =>
                   toast({
-                    title: "⚡ sudo hire-me",
+                    title: "sudo hire-me",
                     description: "Permission Granted! Contact anishisbusy@gmail.com to start building awesome software together.",
                   })
                 )
               }
               value="sudo hire-me"
             >
-              <Terminal className="mr-2 h-4 w-4 text-green-500" />
+              <Terminal className="mr-2 h-4 w-4" />
               sudo hire-me
             </CommandItem>
 
@@ -304,14 +318,14 @@ export function Navigation() {
               onSelect={() =>
                 runCommand(() =>
                   toast({
-                    title: "📖 cat philosophy.txt",
+                    title: "cat philosophy.txt",
                     description: "'First make it work, then make it right, then make it fast.' — Kent Beck",
                   })
                 )
               }
               value="cat philosophy.txt"
             >
-              <Terminal className="mr-2 h-4 w-4 text-yellow-500" />
+              <Terminal className="mr-2 h-4 w-4" />
               cat philosophy.txt
             </CommandItem>
 
@@ -319,14 +333,14 @@ export function Navigation() {
               onSelect={() =>
                 runCommand(() =>
                   toast({
-                    title: "🕶️ matrix mode",
+                    title: "matrix",
                     description: "You took the green pill! Welcome to the Gruvbox Matrix.",
                   })
                 )
               }
               value="matrix"
             >
-              <Sparkles className="mr-2 h-4 w-4 text-primary" />
+              <Terminal className="mr-2 h-4 w-4" />
               matrix
             </CommandItem>
           </CommandGroup>

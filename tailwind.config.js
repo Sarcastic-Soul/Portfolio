@@ -50,6 +50,12 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        brand: "hsl(var(--brand) / <alpha-value>)",
+        surface: "hsl(var(--surface) / <alpha-value>)",
+        term: {
+          ok: "hsl(var(--term-ok) / <alpha-value>)",
+          dim: "hsl(var(--term-dim) / <alpha-value>)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -120,7 +126,7 @@ module.exports = {
         "scale-in": "scale-in 0.6s ease-out both",
       },
       fontFamily: {
-        sans: ["JetBrains Mono", "Inter", "system-ui", "sans-serif"],
+        sans: ["JetBrains Mono", "ui-monospace", "monospace"],
         mono: ["JetBrains Mono", "Fira Code", "monospace"],
       },
       fontSize: {

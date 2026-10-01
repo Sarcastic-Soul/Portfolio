@@ -1,150 +1,213 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
-import { Github, TechIcon } from "@/components/icons";
-import { projects } from "@/lib/data";
-import { ProjectImage } from "@/components/project-image";
+import {
+  ArrowUpRightIcon,
+  DownloadSimpleIcon,
+  GithubLogoIcon,
+  PlayIcon,
+} from "@phosphor-icons/react/ssr";
+import { TechIcon } from "@/components/icons";
+import { ProjectPreview } from "@/components/project-preview";
+import { projects, projectCategories, type Project, type ProjectCategory } from "@/lib/data";
 
-const categories = ["All", "Full Stack", "Systems & Backend", "AI / RAG"];
+type Filter = "All" | ProjectCategory;
+
+const linkBase =
+  "inline-flex items-center gap-2 rounded-md px-3.5 py-2 text-sm transition-colors duration-200";
+const linkPrimary = `${linkBase} bg-foreground text-background hover:bg-brand`;
+const linkSecondary = `${linkBase} border border-border text-foreground hover:border-foreground`;
+
+function ProjectLinks({ project }: { project: Project }) {
+  const external = { target: "_blank", rel: "noopener noreferrer" } as const;
+  return (
+    <div className="space-y-2">
+      <div className="flex flex-wrap gap-2.5">
+        {project.download && (
+          <a href={project.download.href} {...external} className={linkPrimary}>
+            <DownloadSimpleIcon className="h-4 w-4" />
+            {project.download.label}
+          </a>
+        )}
+        {project.demo && (
+          <a href={project.demo} {...external} className={project.download ? linkSecondary : linkPrimary}>
+            <ArrowUpRightIcon className="h-4 w-4" />
+            Live demo
+          </a>
+        )}
+        {project.video && (
+          <a href={project.video} {...external} className={linkSecondary}>
+            <PlayIcon className="h-4 w-4" />
+            Demo video
+          </a>
+        )}
+        <a href={project.github} {...external} className={linkSecondary}>
+          <GithubLogoIcon className="h-4 w-4" />
+          Code
+        </a>
+      </div>
+      {project.demoNote && <p className="text-xs text-muted-foreground">{project.demoNote}</p>}
+    </div>
+  );
+}
+
+function TechList({ items, small }: { items: string[]; small?: boolean }) {
+  return (
+    <ul className="flex flex-wrap gap-x-4 gap-y-2">
+      {items.map((tech) => (
+        <li
+          key={tech}
+          className={`inline-flex items-center gap-1.5 text-muted-foreground ${small ? "text-xs" : "text-sm"}`}
+        >
+          <TechIcon name={tech} className={small ? "h-3.5 w-3.5" : "h-4 w-4"} />
+          {tech}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function Meta({ project, index }: { project: Project; index?: number }) {
+  return (
+    <p className="flex items-center gap-3 text-xs uppercase tracking-wider text-muted-foreground">
+      {index !== undefined && <span className="text-brand">{String(index + 1).padStart(2, "0")}</span>}
+      <span>{project.category}</span>
+      <span aria-hidden>·</span>
+      <span>{project.year}</span>
+    </p>
+  );
+}
+
+function FeaturedProject({ project, index }: { project: Project; index: number }) {
+  const flip = index % 2 === 1;
+  return (
+    <article
+      id={project.slug}
+      className="grid scroll-mt-28 grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-14"
+    >
+      <div className={`space-y-6 lg:col-span-5 ${flip ? "lg:order-2" : ""}`}>
+        <div className="space-y-3">
+          <Meta project={project} index={index} />
+          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">{project.title}</h2>
+          <p className="text-lg text-foreground">{project.tagline}</p>
+        </div>
+        <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">{project.description}</p>
+        {project.highlights.length > 0 && (
+          <ul className="space-y-2 text-sm text-foreground">
+            {project.highlights.map((h) => (
+              <li key={h} className="flex gap-2.5">
+                <span className="select-none text-brand" aria-hidden>
+                  ›
+                </span>
+                <span>{h}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        <TechList items={project.technologies} />
+        <ProjectLinks project={project} />
+      </div>
+      <div className={`lg:col-span-7 ${flip ? "lg:order-1" : ""}`}>
+        <ProjectPreview preview={project.preview} />
+      </div>
+    </article>
+  );
+}
+
+function CompactProject({ project }: { project: Project }) {
+  return (
+    <article id={project.slug} className="flex scroll-mt-28 flex-col gap-5">
+      <ProjectPreview preview={project.preview} compact />
+      <div className="flex flex-1 flex-col gap-4">
+        <div className="space-y-2">
+          <Meta project={project} />
+          <h3 className="text-2xl font-bold tracking-tight text-foreground">{project.title}</h3>
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            <span className="text-foreground">{project.tagline}</span> {project.description}
+          </p>
+        </div>
+        <TechList items={project.technologies} small />
+        <div className="mt-auto">
+          <ProjectLinks project={project} />
+        </div>
+      </div>
+    </article>
+  );
+}
 
 export function ProjectsContent() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [filter, setFilter] = useState<Filter>("All");
 
-  const filteredProjects = projects.filter(
-    (p) => selectedCategory === "All" || p.category === selectedCategory
-  );
+  const visible = projects.filter((p) => filter === "All" || p.category === filter);
+  const featured = visible.filter((p) => p.featured);
+  const more = visible.filter((p) => !p.featured);
+  const countFor = (f: Filter) =>
+    f === "All" ? projects.length : projects.filter((p) => p.category === f).length;
 
   return (
-    <div>
-      <section
-        id="projects"
-        className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-12 bg-background"
-      >
-        <div className="container mx-auto">
-          <div className="text-center mb-10 sm:mb-14 animate-fade-in-up">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-light tracking-tight mb-4 sm:mb-6 text-foreground">
-              Projects
-            </h2>
-            <p className="text-base sm:text-lg lg:text-xl font-light text-muted-foreground max-w-2xl mx-auto px-4 mb-8">
-              A curated collection of projects that showcase my approach to
-              solving complex problems.
+    <section id="projects" className="px-4 pb-24 pt-32 sm:px-6 lg:px-12 lg:pt-40">
+      <div className="container mx-auto max-w-7xl">
+        <header className="mb-14 grid gap-8 lg:mb-20 lg:grid-cols-12 lg:items-end">
+          <div className="space-y-4 lg:col-span-7">
+            <p className="text-sm text-muted-foreground">
+              <span className="text-brand">$</span> ls ~/projects
             </p>
+            <h1 className="text-5xl font-bold tracking-tight text-foreground sm:text-7xl">Projects</h1>
+            <p className="max-w-xl text-base text-muted-foreground sm:text-lg">
+              Things I have built, most of them from the ground up: a database server, a coding
+              agent, scaled backends, AI tools and one offline Android app.
+            </p>
+          </div>
 
-            {/* Category Filter Tabs */}
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-              {categories.map((cat) => (
-                <Button
-                  key={cat}
-                  variant={selectedCategory === cat ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`rounded-full px-4 sm:px-6 py-2 text-xs sm:text-sm font-mono transition-all duration-300 ${
-                    selectedCategory === cat
-                      ? "bg-primary text-primary-foreground shadow-md"
-                      : "border-border text-muted-foreground hover:text-foreground bg-transparent"
+          <div
+            role="group"
+            aria-label="Filter projects by category"
+            className="flex flex-wrap gap-x-1 gap-y-2 border-b border-border lg:col-span-5 lg:justify-end"
+          >
+            {(["All", ...projectCategories] as Filter[]).map((f) => {
+              const active = filter === f;
+              return (
+                <button
+                  key={f}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => setFilter(f)}
+                  className={`-mb-px border-b-2 px-3 py-3 text-sm transition-colors ${
+                    active
+                      ? "border-brand text-foreground"
+                      : "border-transparent text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  {cat}
-                </Button>
+                  {f.toLowerCase()} <span className="text-xs text-muted-foreground">{countFor(f)}</span>
+                </button>
+              );
+            })}
+          </div>
+        </header>
+
+        {featured.length > 0 && (
+          <div className="space-y-24 lg:space-y-32">
+            {featured.map((project, i) => (
+              <FeaturedProject key={project.slug} project={project} index={i} />
+            ))}
+          </div>
+        )}
+
+        {more.length > 0 && (
+          <div className={featured.length > 0 ? "mt-28 border-t border-border pt-14 lg:mt-36" : ""}>
+            {featured.length > 0 && (
+              <h2 className="mb-10 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                More projects
+              </h2>
+            )}
+            <div className="grid grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-2">
+              {more.map((project) => (
+                <CompactProject key={project.slug} project={project} />
               ))}
             </div>
           </div>
-
-          <div className="space-y-16 sm:space-y-24 lg:space-y-32">
-            {filteredProjects.map((project, index) => (
-              <div
-                key={project.title}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center animate-fade-in-up ${
-                  index % 2 === 1 ? "lg:grid-flow-col-dense" : ""
-                }`}
-                style={{ animationDelay: `${index * 0.05}s` }}
-              >
-                <div
-                  className={`space-y-6 sm:space-y-8 ${
-                    index % 2 === 1 ? "lg:col-start-2" : ""
-                  }`}
-                >
-                  <div className="space-y-4">
-                    <div className="inline-block px-3 py-1 rounded-full text-xs font-mono border border-primary/40 bg-primary/10 text-primary">
-                      {project.category}
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-light tracking-tight text-foreground">
-                      {project.title}
-                    </h3>
-                    <p className="text-base sm:text-lg font-light text-muted-foreground leading-relaxed">
-                      {project.description}
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 sm:gap-3">
-                    {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-light tracking-wide border border-border bg-secondary/50 text-secondary-foreground rounded-full"
-                      >
-                        <TechIcon name={tech} className="w-4 h-4 shrink-0" />
-                        <span>{tech}</span>
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      className="border-foreground text-foreground hover:bg-foreground hover:text-background rounded-full font-light tracking-wide bg-transparent"
-                      asChild
-                    >
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Github className="mr-2 h-4 w-4" />
-                        Code
-                      </a>
-                    </Button>
-                    {project.demo && (
-                      <Button
-                        size="lg"
-                        className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full font-light tracking-wide"
-                        asChild
-                      >
-                        <a
-                          href={project.demo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <ExternalLink className="mr-2 h-4 w-4" />
-                          Live Demo
-                        </a>
-                      </Button>
-                    )}
-                  </div>
-                </div>
-
-                <div
-                  className={`${
-                    index % 2 === 1 ? "lg:col-start-1 lg:row-start-1" : ""
-                  } transition-transform duration-300 hover:scale-[1.02]`}
-                >
-                  <Card className="border-0 shadow-lg overflow-hidden bg-muted rounded-2xl group card-grain card-shine">
-                    <CardContent className="p-0">
-                      <ProjectImage
-                        src={project.image || "/placeholder.svg"}
-                        alt={project.title}
-                      />
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    </div>
+        )}
+      </div>
+    </section>
   );
 }

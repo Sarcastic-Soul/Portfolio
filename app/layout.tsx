@@ -9,10 +9,10 @@ import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scroll-to-top";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"] });
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+const siteUrl = "https://anish-k.vercel.app";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sarcastic-soul.github.io/Portfolio/"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Anish Kumar | Full Stack & Systems Developer",
     template: "%s | Anish Kumar",
@@ -35,22 +35,22 @@ export const metadata: Metadata = {
   creator: "Anish Kumar",
   icons: {
     icon: [
-      { url: `${basePath}/favicon.ico` },
-      { url: `${basePath}/icon.png`, type: "image/png" },
+      { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png" },
     ],
-    shortcut: `${basePath}/favicon.ico`,
+    shortcut: "/favicon.ico",
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://sarcastic-soul.github.io/Portfolio/",
+    url: siteUrl,
     title: "Anish Kumar | Full Stack & Systems Developer",
     description:
       "Portfolio of Anish Kumar, Full Stack & Systems Developer at IIIT Naya Raipur. Building scalable systems from scratch with minimal third-party dependencies.",
     siteName: "Anish Kumar Portfolio",
     images: [
       {
-        url: "https://image.thum.io/get/width/1200/crop/630/https://sarcastic-soul.github.io/Portfolio/",
+        url: `https://image.thum.io/get/width/1200/crop/630/${siteUrl}`,
         width: 1200,
         height: 630,
         alt: "Anish Kumar Portfolio Live Preview",
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     description:
       "Portfolio of Anish Kumar, Full Stack & Systems Developer at IIIT Naya Raipur. Building scalable systems from scratch with minimal third-party dependencies.",
     images: [
-      "https://image.thum.io/get/width/1200/crop/630/https://sarcastic-soul.github.io/Portfolio/",
+      `https://image.thum.io/get/width/1200/crop/630/${siteUrl}`,
     ],
     creator: "@Sarcastic_Soul",
   },

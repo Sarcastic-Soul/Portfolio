@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/sections/hero";
+import { SelectedWork } from "@/components/sections/selected-work";
 
 export const metadata: Metadata = {
   title: "Anish Kumar | Full Stack & Systems Developer",
@@ -8,5 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return <Hero />;
+  return (
+    <>
+      <Hero />
+      <SelectedWork />
+    </>
+  );
 }

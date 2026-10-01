@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowUp } from "lucide-react";
+import { ArrowUpIcon as ArrowUp } from "@phosphor-icons/react/ssr";
 
 export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -31,14 +31,14 @@ export function ScrollToTop() {
     <div
       className={`fixed bottom-8 right-8 z-50 no-print transition-all duration-300 transform ${
         isVisible
-          ? "opacity-100 scale-100 translate-y-0"
-          : "opacity-0 scale-75 translate-y-4 pointer-events-none"
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 translate-y-4 pointer-events-none"
       }`}
     >
       <Button
         onClick={scrollToTop}
         size="sm"
-        className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300"
+        className="h-10 w-10 rounded-md border border-border bg-background p-0 text-foreground transition-colors duration-200 hover:border-brand hover:bg-background hover:text-brand"
       >
         <ArrowUp className="h-5 w-5" />
         <span className="sr-only">Scroll to top</span>

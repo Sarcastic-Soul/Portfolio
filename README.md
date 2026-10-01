@@ -9,7 +9,7 @@ A modern, high-performance developer portfolio built with **Next.js 16 (App Rout
 - **Framework**: Next.js 16 (App Router & Turbopack)
 - **Styling**: Tailwind CSS + Shadcn UI (Radix Primitives)
 - **Icons**: Centralized `@iconify/react` registry (`simple-icons`, `logos`, `devicon`, `skill-icons`)
-- **Export Mode**: Static HTML Export (`output: "export"` in `next.config.mjs` for GitHub Pages deployment)
+- **Export Mode**: Static HTML Export (`output: "export"` in `next.config.mjs`), deployed on Vercel at https://anish-k.vercel.app
 
 ---
 
@@ -73,8 +73,8 @@ Portfolio/
 ├── lib/
 │   ├── data.ts               # Core portfolio data source (experiences, projects, skills, socials)
 │   └── utils.ts              # Helper functions (cn utility for Tailwind class merging)
-├── public/                   # Static assets & metadata.json
-├── next.config.mjs           # Next.js configuration (basePath: "/Portfolio", output: "export")
+├── public/                   # Static assets
+├── next.config.mjs           # Next.js configuration (output: "export", last-updated date)
 └── package.json              # Scripts & dependencies
 ```
 
@@ -100,11 +100,7 @@ Build and serve the static export using `serve`:
 npm run serve
 ```
 
-### GitHub Pages Deployment
-1. Next config is pre-configured with static export:
-   ```javascript
-   const isProd = process.env.NODE_ENV === "production";
-   const basePath = isProd ? "/Portfolio" : "";
-   ```
-2. Running `npm run build` generates static HTML files in the `out/` folder.
-3. Deploy the `out/` folder to GitHub Pages (`gh-pages` branch or GitHub Actions workflow).
+### Deployment
+Vercel builds and deploys on every push to `main` (https://anish-k.vercel.app).
+`npm run build` writes the static site to `out/`. The footer's "last updated"
+date is the latest commit date, read by `next.config.mjs` at build time.

@@ -134,6 +134,17 @@ export const iconMap: Record<string, string> = {
   "TCP Sockets": "logos:java",
   "AOF Persistence": "logos:redis",
 
+  // Project stacks
+  Valkey: "logos:valkey",
+  Ink: "logos:react",
+  "Vercel AI SDK": "logos:vercel-icon",
+  "React Native": "logos:react",
+  Expo: "simple-icons:expo",
+  "TensorFlow Lite": "logos:tensorflow",
+  Rust: "logos:rust",
+  GTK4: "simple-icons:gtk",
+  "Java NIO": "logos:java",
+
   // Coding Platforms & Socials
   LeetCode: "devicon:leetcode",
   Codeforces: "simple-icons:codeforces",

@@ -1,47 +1,40 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Home, ArrowLeft } from "lucide-react";
+import { ArrowLeftIcon, HouseIcon } from "@phosphor-icons/react/ssr";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background px-6 text-center">
-      <div className="space-y-6 max-w-lg animate-fade-in">
-        {/* Gruvbox themed badge / code indicator */}
-        <div className="inline-block px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary font-mono text-sm font-semibold tracking-wider">
-          404 ERROR
-        </div>
+    <div className="flex min-h-screen items-center bg-background px-4 sm:px-6 lg:px-12">
+      <div className="container mx-auto max-w-7xl animate-fade-in space-y-6">
+        <pre className="text-sm text-muted-foreground">
+          <span className="text-brand">$</span> cd {"<this page>"}
+          {"\n"}
+          <span className="text-destructive">cd: no such file or directory</span>
+        </pre>
 
-        <h1 className="text-6xl sm:text-7xl font-bold font-mono tracking-tight text-foreground">
-          Page Not Found
-        </h1>
+        <h1 className="cursor-block text-6xl font-bold tracking-tight text-foreground sm:text-8xl">404</h1>
 
-        <p className="text-lg text-muted-foreground leading-relaxed font-light">
-          The requested page or resource could not be found on this route. You may have typed an incorrect address or the page has moved.
+        <p className="max-w-lg text-lg leading-relaxed text-muted-foreground">
+          This page does not exist. The link may be old, or the address has a typo.
         </p>
 
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button
-            asChild
-            size="lg"
-            className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 py-6 text-base font-medium tracking-wide transition-all duration-300 shadow-lg hover:shadow-primary/20"
+        <div className="flex flex-wrap gap-3 pt-2">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 rounded-md bg-foreground px-5 py-3 text-background transition-colors duration-200 hover:bg-brand"
           >
-            <Link href="/">
-              <Home className="mr-2 h-5 w-5" />
-              Return Home
-            </Link>
-          </Button>
-
-          <Button
+            <HouseIcon className="h-5 w-5" />
+            Home
+          </Link>
+          <button
+            type="button"
             onClick={() => window.history.back()}
-            variant="outline"
-            size="lg"
-            className="w-full sm:w-auto border-border text-foreground hover:bg-muted rounded-full px-8 py-6 text-base font-medium tracking-wide transition-all duration-300"
+            className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-3 text-foreground transition-colors duration-200 hover:border-foreground"
           >
-            <ArrowLeft className="mr-2 h-5 w-5" />
-            Go Back
-          </Button>
+            <ArrowLeftIcon className="h-5 w-5" />
+            Go back
+          </button>
         </div>
       </div>
     </div>

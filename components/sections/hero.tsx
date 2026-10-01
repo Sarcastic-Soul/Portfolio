@@ -1,7 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { ExternalLink, Mail, MapPin } from "lucide-react";
+import { ArrowUpRightIcon, EnvelopeSimpleIcon, MapPinIcon } from "@phosphor-icons/react/ssr";
 import { socialLinks, RESUME_LINK } from "@/lib/data";
 import { useToast } from "@/hooks/use-toast";
 import { InteractiveQuote } from "@/components/interactive-quote";
@@ -9,109 +8,105 @@ import { InteractiveQuote } from "@/components/interactive-quote";
 export function Hero() {
   const { toast } = useToast();
 
-  const handleDownloadResume = () => {
-    window.open(RESUME_LINK, "_blank", "noopener,noreferrer");
-  };
-
   const handleCopyEmail = (e: React.MouseEvent) => {
     e.preventDefault();
     navigator.clipboard.writeText("anishisbusy@gmail.com");
     toast({
-      title: "Email Copied!",
-      description: "anishisbusy@gmail.com has been copied to your clipboard.",
+      title: "Email copied",
+      description: "anishisbusy@gmail.com is on your clipboard.",
     });
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-12 bg-background py-20 lg:py-0">
+    <section className="flex min-h-screen items-center bg-background px-4 pb-16 pt-28 sm:px-6 lg:px-12 lg:pb-12">
       <div className="container mx-auto max-w-7xl animate-fade-in">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start lg:items-center">
-          {/* Left Column: Identity & Contact Details */}
-          <div className="flex flex-col items-center text-center lg:items-start lg:text-left space-y-8 w-full">
-            {/* --- Profile Image Section --- */}
-            <div className="relative w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56">
-              <img
-                src={`./image.png`}
-                alt="Anish Kumar"
-                className="w-full h-full object-cover rounded-full border-4 border-primary shadow-xl"
-              />
-            </div>
+        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:items-center lg:gap-16">
+          {/* Identity */}
+          <div className="flex w-full flex-col items-start space-y-8 lg:col-span-6">
+            <img
+              src={`./image.png`}
+              alt="Anish Kumar"
+              className="h-32 w-32 rounded-md border border-border object-cover sm:h-40 sm:w-40"
+            />
 
-            <div className="space-y-3 w-full">
-              <h2 className="text-lg sm:text-xl font-mono tracking-widest text-primary uppercase">
-                Full Stack Developer
-              </h2>
-              <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-foreground leading-none">
-                ANISH KUMAR
+            <div className="w-full space-y-4">
+              <p className="text-sm text-muted-foreground">
+                <span className="text-brand">$</span> whoami
+              </p>
+              <h1 className="cursor-block text-5xl font-bold leading-[0.95] tracking-tight text-foreground sm:text-7xl lg:text-8xl">
+                Anish
+                <br />
+                Kumar
               </h1>
+              <p className="text-lg text-foreground sm:text-xl">
+                Full stack &amp; systems developer
+              </p>
             </div>
 
-            {/* Location & Email */}
-            <div className="space-y-2 pt-2 flex flex-col items-center lg:items-start">
-              <div className="flex items-center space-x-3 text-muted-foreground">
-                <MapPin className="h-5 w-5 text-primary shrink-0" />
-                <span className="text-lg">Raipur, India</span>
+            <div className="flex flex-col gap-2 text-muted-foreground">
+              <div className="flex items-center gap-3">
+                <MapPinIcon className="h-5 w-5 shrink-0 text-brand" />
+                <span>Raipur, India</span>
               </div>
-              <div className="flex items-center space-x-3 text-muted-foreground">
-                <Mail className="h-5 w-5 text-primary shrink-0" />
+              <div className="flex items-center gap-3">
+                <EnvelopeSimpleIcon className="h-5 w-5 shrink-0 text-brand" />
                 <button
                   onClick={handleCopyEmail}
-                  className="text-lg hover:text-primary transition-colors text-center lg:text-left"
+                  className="text-left underline decoration-border underline-offset-4 transition-colors hover:text-foreground hover:decoration-brand"
+                  title="Copy email"
                 >
                   anishisbusy@gmail.com
                 </button>
               </div>
             </div>
 
-            {/* Social Links */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-3">
+            <div className="flex flex-wrap gap-2.5">
               {socialLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
                   onClick={link.label === "Email" ? handleCopyEmail : undefined}
                   target={link.label === "Email" ? undefined : "_blank"}
-                  rel={
-                    link.label === "Email" ? undefined : "noopener noreferrer"
-                  }
-                  className="flex items-center space-x-2 px-4 py-2 rounded-full border border-border hover:border-primary hover:text-primary transition-colors duration-300 text-muted-foreground bg-secondary/30"
+                  rel={link.label === "Email" ? undefined : "noopener noreferrer"}
+                  className="flex items-center gap-2 rounded-md border border-border px-3.5 py-2 text-sm text-muted-foreground transition-colors duration-200 hover:border-foreground hover:text-foreground"
                 >
                   <link.icon className="h-4 w-4" />
-                  <span className="text-sm">{link.label}</span>
+                  <span>{link.label}</span>
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Right Column: About, Quote & Resume Button */}
-          <div className="space-y-10 lg:pl-2">
-            <div className="space-y-6">
-              <h3 className="text-2xl font-semibold text-foreground border-b border-border pb-2 inline-block">
-                About Me
-              </h3>
-              <div className="space-y-4 text-base sm:text-lg text-muted-foreground leading-relaxed font-light">
+          {/* About */}
+          <div className="space-y-10 lg:col-span-6">
+            <div className="space-y-5">
+              <h2 className="text-sm font-normal uppercase tracking-widest text-muted-foreground">
+                About
+              </h2>
+              <div className="space-y-4 text-base leading-relaxed text-foreground sm:text-lg">
                 <p>
-                  I&apos;m a dedicated B.Tech student at IIIT Naya Raipur focused on building scalable systems from scratch with minimal third-party dependencies.
+                  B.Tech student at IIIT Naya Raipur. I like building systems from scratch with as
+                  few third-party dependencies as I can get away with: a Redis-compatible server in
+                  plain Java, a terminal coding agent, backends that autoscale under load.
                 </p>
-                <p>
-                  I practice pragmatic engineering—building high-performance architectures designed precisely to requirement, avoiding bloated dependencies and unnecessary over-engineering.
+                <p className="text-muted-foreground">
+                  I build to the requirement. Fast where it matters, simple everywhere else, and no
+                  extra layers nobody asked for.
                 </p>
               </div>
             </div>
 
-            {/* Interactive Motto & Philosophy Quote */}
             <InteractiveQuote />
 
-            <div className="pt-2 w-full">
-              <Button
-                onClick={handleDownloadResume}
-                size="lg"
-                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-8 py-6 text-lg font-medium tracking-wide transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-3"
-              >
-                <ExternalLink className="h-5 w-5" />
-                View Resume
-              </Button>
-            </div>
+            <a
+              href={RESUME_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex w-full items-center justify-between rounded-md bg-foreground px-6 py-5 text-lg text-background transition-colors duration-200 hover:bg-brand"
+            >
+              <span>View resume</span>
+              <ArrowUpRightIcon className="h-5 w-5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </a>
           </div>
         </div>
       </div>
