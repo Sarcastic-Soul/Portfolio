@@ -7,13 +7,7 @@ export default function NotFound() {
   return (
     <div className="flex min-h-screen items-center bg-background px-4 sm:px-6 lg:px-12">
       <div className="container mx-auto max-w-7xl animate-fade-in space-y-6">
-        <pre className="text-sm text-muted-foreground">
-          <span className="text-brand">$</span> cd {"<this page>"}
-          {"\n"}
-          <span className="text-destructive">cd: no such file or directory</span>
-        </pre>
-
-        <h1 className="cursor-block text-6xl font-bold tracking-tight text-foreground sm:text-8xl">404</h1>
+        <h1 className="text-6xl font-bold tracking-tight text-foreground sm:text-8xl">404</h1>
 
         <p className="max-w-lg text-lg leading-relaxed text-muted-foreground">
           This page does not exist. The link may be old, or the address has a typo.

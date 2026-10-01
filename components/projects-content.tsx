@@ -149,9 +149,6 @@ export function ProjectsContent() {
       <div className="container mx-auto max-w-7xl">
         <header className="mb-14 grid gap-8 lg:mb-20 lg:grid-cols-12 lg:items-end">
           <div className="space-y-4 lg:col-span-7">
-            <p className="text-sm text-muted-foreground">
-              <span className="text-brand">$</span> ls ~/projects
-            </p>
             <h1 className="text-5xl font-bold tracking-tight text-foreground sm:text-7xl">Projects</h1>
             <p className="max-w-xl text-base text-muted-foreground sm:text-lg">
               Things I have built, most of them from the ground up: a database server, a coding

@@ -22,18 +22,22 @@ export function Hero() {
       <div className="container mx-auto max-w-7xl animate-fade-in">
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:items-center lg:gap-16">
           {/* Identity */}
-          <div className="flex w-full flex-col items-start space-y-8 lg:col-span-6">
+          <div className="flex w-full flex-col items-center space-y-8 text-center lg:col-span-6">
+            {/* Pre-scaled copies of /image.png. Letting the browser shrink the
+                1792px original to ~260px in one step made the art look jagged. */}
             <img
-              src={`./image.png`}
+              src="/avatar-512.webp"
+              srcSet="/avatar-256.webp 256w, /avatar-512.webp 512w, /avatar-768.webp 768w"
+              sizes="(min-width: 1024px) 264px, (min-width: 640px) 229px, 194px"
+              width={264}
+              height={264}
               alt="Anish Kumar"
-              className="h-32 w-32 rounded-md border border-border object-cover sm:h-40 sm:w-40"
+              fetchPriority="high"
+              className="h-44 w-44 rounded-full border-4 border-primary object-cover sm:h-52 sm:w-52 lg:h-60 lg:w-60"
             />
 
             <div className="w-full space-y-4">
-              <p className="text-sm text-muted-foreground">
-                <span className="text-brand">$</span> whoami
-              </p>
-              <h1 className="cursor-block text-5xl font-bold leading-[0.95] tracking-tight text-foreground sm:text-7xl lg:text-8xl">
+              <h1 className="text-5xl font-bold leading-[0.95] tracking-tight text-foreground sm:text-7xl lg:text-8xl">
                 Anish
                 <br />
                 Kumar
@@ -43,7 +47,7 @@ export function Hero() {
               </p>
             </div>
 
-            <div className="flex flex-col gap-2 text-muted-foreground">
+            <div className="flex flex-col items-center gap-2 text-muted-foreground">
               <div className="flex items-center gap-3">
                 <MapPinIcon className="h-5 w-5 shrink-0 text-brand" />
                 <span>Raipur, India</span>
@@ -60,7 +64,7 @@ export function Hero() {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-2.5">
+            <div className="flex flex-wrap justify-center gap-2.5">
               {socialLinks.map((link) => (
                 <a
                   key={link.label}

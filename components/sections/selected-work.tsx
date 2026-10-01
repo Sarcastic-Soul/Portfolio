@@ -6,7 +6,7 @@ export function SelectedWork() {
   const featured = projects.filter((p) => p.featured);
 
   return (
-    <section className="px-4 pb-24 sm:px-6 lg:px-12">
+    <section className="px-4 pb-24 pt-12 sm:px-6 lg:px-12 lg:pt-16">
       <div className="container mx-auto max-w-7xl">
         <div className="mb-8 flex items-end justify-between gap-6 border-b border-border pb-4">
           <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Selected work</h2>

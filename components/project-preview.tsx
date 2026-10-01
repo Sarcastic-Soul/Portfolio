@@ -69,9 +69,6 @@ function Terminal({ title, lines, compact }: { title: string; lines: TerminalLin
             {line.text}
           </div>
         ))}
-        <span className="cursor-block text-transparent" aria-hidden>
-          {" "}
-        </span>
       </pre>
     </div>
   );

@@ -1,19 +1,14 @@
 export function SectionHeading({
-  command,
   title,
   intro,
   as: Tag = "h2",
 }: {
-  command: string;
   title: string;
   intro?: string;
   as?: "h1" | "h2";
 }) {
   return (
     <header className="mb-10 space-y-3 sm:mb-14">
-      <p className="text-sm text-muted-foreground">
-        <span className="text-brand">$</span> {command}
-      </p>
       <Tag
         className={`font-bold tracking-tight text-foreground ${
           Tag === "h1" ? "text-5xl sm:text-7xl" : "text-3xl sm:text-4xl"

@@ -199,7 +199,6 @@ export function CodingProfiles() {
     <section id="coding" className="px-4 py-20 sm:px-6 lg:px-12">
       <div className="container mx-auto max-w-7xl">
         <SectionHeading
-          command="curl stats"
           title="Coding profiles"
           intro="Live numbers, pulled from each site when the page loads."
         />

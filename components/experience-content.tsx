@@ -117,12 +117,12 @@ export function ExperienceContent() {
     <section id="experience" className="px-4 pb-24 pt-32 sm:px-6 lg:px-12 lg:pt-40">
       <div className="container mx-auto max-w-7xl space-y-24">
         <div>
-          <SectionHeading as="h1" command="git log --author=anish" title="Experience" />
+          <SectionHeading as="h1" title="Experience" />
           <Timeline entries={work} />
         </div>
 
         <div>
-          <SectionHeading command="gh pr list --author=@me" title="Open source" />
+          <SectionHeading title="Open source" />
           <Timeline entries={openSource} />
         </div>
       </div>

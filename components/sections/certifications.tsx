@@ -6,7 +6,7 @@ export function Certifications() {
   return (
     <section id="certifications" className="px-4 pb-24 pt-20 sm:px-6 lg:px-12">
       <div className="container mx-auto max-w-7xl">
-        <SectionHeading command="ls ~/certs" title="Certifications" />
+        <SectionHeading title="Certifications" />
 
         <ul className="border-t border-border">
           {certifications.map((item) => (

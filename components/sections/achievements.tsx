@@ -5,7 +5,7 @@ export function Achievements() {
   return (
     <section id="achievements" className="px-4 py-20 sm:px-6 lg:px-12">
       <div className="container mx-auto max-w-7xl">
-        <SectionHeading command="grep -r wins ~/" title="Achievements" />
+        <SectionHeading title="Achievements" />
 
         <ol className="grid grid-cols-1 border-t border-border md:grid-cols-3">
           {achievements.map((achievement) => (
