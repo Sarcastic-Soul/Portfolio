@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ogImage } from "@/lib/og-image";
 import { ExperienceContent } from "@/components/experience-content";
 
 export const metadata: Metadata = {
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
     title: "Experience | Anish Kumar",
     description:
       "Professional software engineering experience, R&D internships, and open-source contributions.",
+    images: [ogImage],
   },
 };
 

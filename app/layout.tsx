@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scroll-to-top";
+import { ogImage } from "@/lib/og-image";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"] });
 const siteUrl = "https://anish-k.vercel.app";
@@ -48,23 +49,14 @@ export const metadata: Metadata = {
     description:
       "Portfolio of Anish Kumar, Full Stack & Systems Developer at IIIT Naya Raipur. Building scalable systems from scratch with minimal third-party dependencies.",
     siteName: "Anish Kumar Portfolio",
-    images: [
-      {
-        url: `https://image.thum.io/get/width/1200/crop/630/${siteUrl}`,
-        width: 1200,
-        height: 630,
-        alt: "Anish Kumar Portfolio Live Preview",
-      },
-    ],
+    images: [ogImage],
   },
   twitter: {
     card: "summary_large_image",
     title: "Anish Kumar | Full Stack & Systems Developer",
     description:
       "Portfolio of Anish Kumar, Full Stack & Systems Developer at IIIT Naya Raipur. Building scalable systems from scratch with minimal third-party dependencies.",
-    images: [
-      `https://image.thum.io/get/width/1200/crop/630/${siteUrl}`,
-    ],
+    images: [ogImage],
     creator: "@Sarcastic_Soul",
   },
 };

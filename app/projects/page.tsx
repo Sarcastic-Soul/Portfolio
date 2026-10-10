@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ogImage } from "@/lib/og-image";
 import { ProjectsContent } from "@/components/projects-content";
 
 export const metadata: Metadata = {
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
     title: "Projects | Anish Kumar",
     description:
       "A database server, a terminal coding agent, scaled backends, AI tools and an offline Android app, built by Anish Kumar.",
+    images: [ogImage],
   },
 };
 

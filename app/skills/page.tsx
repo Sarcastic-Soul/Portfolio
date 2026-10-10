@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ogImage } from "@/lib/og-image";
 import { Skills } from "@/components/sections/skills";
 import { Achievements } from "@/components/sections/achievements";
 import { CodingProfiles } from "@/components/sections/coding-profiles";
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     title: "Skills & Credentials | Anish Kumar",
     description:
       "Technical skills, coding profile metrics (LeetCode, Codeforces), achievements, and verified certifications.",
+    images: [ogImage],
   },
 };
 
