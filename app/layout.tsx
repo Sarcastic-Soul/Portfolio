@@ -1,39 +1,42 @@
 import type React from "react";
 import type { Metadata } from "next";
+import { GeistSans } from "geist/font/sans";
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@/components/ui/toaster";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { ogImage } from "@/lib/og-image";
+import { SITE_URL } from "@/lib/data";
 
-const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"] });
-const siteUrl = "https://anish-k.vercel.app";
+const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
+
+const title = "Anish Kumar | Backend & Full-Stack Developer";
+const description =
+  "Anish Kumar, B.Tech student at IIIT Naya Raipur and backend & full-stack developer. Two internships (Samsung PRISM, Aparsoft), a Redis-compatible server in Java, a Kubernetes-scaled URL shortener and a terminal coding agent.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: {
-    default: "Anish Kumar | Full Stack & Systems Developer",
-    template: "%s | Anish Kumar",
-  },
-  description:
-    "Portfolio of Anish Kumar, Full Stack & Systems Developer at IIIT Naya Raipur. Building scalable systems from scratch with minimal third-party dependencies.",
+  metadataBase: new URL(SITE_URL),
+  title,
+  description,
   keywords: [
     "Anish Kumar",
+    "Backend Developer",
     "Full Stack Developer",
-    "Systems Engineer",
+    "Software Engineer",
     "IIIT Naya Raipur",
-    "Java NIO",
+    "Java",
     "Spring Boot",
     "Next.js",
     "React",
     "TypeScript",
-    "Open Source",
+    "Python",
   ],
-  authors: [{ name: "Anish Kumar", url: "https://github.com/Sarcastic-Soul" }],
+  authors: [{ name: "Anish Kumar", url: SITE_URL }],
   creator: "Anish Kumar",
+  alternates: { canonical: "/" },
+  robots: { index: true, follow: true },
   icons: {
     icon: [
       { url: "/favicon.ico" },
@@ -42,20 +45,20 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
   },
   openGraph: {
-    type: "website",
+    type: "profile",
     locale: "en_US",
-    url: siteUrl,
-    title: "Anish Kumar | Full Stack & Systems Developer",
-    description:
-      "Portfolio of Anish Kumar, Full Stack & Systems Developer at IIIT Naya Raipur. Building scalable systems from scratch with minimal third-party dependencies.",
-    siteName: "Anish Kumar Portfolio",
+    url: SITE_URL,
+    title,
+    description,
+    siteName: "Anish Kumar",
+    firstName: "Anish",
+    lastName: "Kumar",
     images: [ogImage],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Anish Kumar | Full Stack & Systems Developer",
-    description:
-      "Portfolio of Anish Kumar, Full Stack & Systems Developer at IIIT Naya Raipur. Building scalable systems from scratch with minimal third-party dependencies.",
+    title,
+    description,
     images: [ogImage],
     creator: "@Sarcastic_Soul",
   },
@@ -67,21 +70,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
-      <body className={jetbrainsMono.className}>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${GeistSans.variable} ${jetbrainsMono.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="font-sans">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <div className="min-h-screen bg-background text-foreground flex flex-col">
-            <Navigation />
-            <main className="flex-grow">{children}</main>
-            <Footer />
-            <ScrollToTop />
-          </div>
-          <Toaster />
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-foreground focus:px-3 focus:py-2 focus:text-background"
+          >
+            Skip to content
+          </a>
+          <Navigation />
+          <main id="main" className="mx-auto max-w-5xl px-4 sm:px-6">
+            {children}
+          </main>
+          <Footer />
+          <ScrollToTop />
         </ThemeProvider>
       </body>
     </html>

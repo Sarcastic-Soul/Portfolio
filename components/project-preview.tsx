@@ -1,8 +1,4 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
 import type { ProjectPreview as Preview, TerminalLine } from "@/lib/data";
-import { Skeleton } from "@/components/ui/skeleton";
 
 function WindowBar({ label }: { label: string }) {
   return (
@@ -17,31 +13,39 @@ function WindowBar({ label }: { label: string }) {
   );
 }
 
-function Shot({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
-  const [loaded, setLoaded] = useState(false);
-  const ref = useRef<HTMLImageElement>(null);
+// Every preview has a "-sm" copy at half width, shrunk ahead of time like the
+// avatar. Letting the browser squeeze a big screenshot into a small box made
+// text and edges look jagged.
+export function smallSrc(src: string) {
+  return src.replace(/\.webp$/, "-sm.webp");
+}
 
-  // A cached image can finish loading before hydration attaches onLoad,
-  // so check once on mount as well.
-  useEffect(() => {
-    if (ref.current?.complete) setLoaded(true);
-  }, []);
-
+function Shot({
+  src,
+  alt,
+  width,
+  sizes,
+  className = "",
+  imgClassName = "h-auto w-full",
+}: {
+  src: string;
+  alt: string;
+  width: number;
+  sizes: string;
+  className?: string;
+  imgClassName?: string;
+}) {
   return (
-    <div className={`relative overflow-hidden bg-secondary/40 ${className}`}>
-      {!loaded && <Skeleton className="absolute inset-0 rounded-none bg-muted" />}
+    <div className={`overflow-hidden bg-muted ${className}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        ref={ref}
         src={src}
+        srcSet={`${smallSrc(src)} ${width / 2}w, ${src} ${width}w`}
+        sizes={sizes}
         alt={alt}
         loading="lazy"
         decoding="async"
-        onLoad={() => setLoaded(true)}
-        onError={() => setLoaded(true)}
-        className={`h-full w-full object-cover object-top transition-opacity duration-300 ${
-          loaded ? "opacity-100" : "opacity-0"
-        }`}
+        className={imgClassName}
       />
     </div>
   );
@@ -60,7 +64,7 @@ function Terminal({ title, lines, compact }: { title: string; lines: TerminalLin
       <WindowBar label={title} />
       <pre
         className={`flex-1 overflow-x-auto bg-surface font-mono leading-relaxed ${
-          compact ? "p-4 text-[11px]" : "p-5 text-xs sm:text-[13px]"
+          compact ? "p-3.5 text-[11px]" : "p-5 text-xs sm:text-[13px]"
         }`}
       >
         {lines.map((line, i) => (
@@ -75,11 +79,11 @@ function Terminal({ title, lines, compact }: { title: string; lines: TerminalLin
 }
 
 export function ProjectPreview({ preview, compact = false }: { preview: Preview; compact?: boolean }) {
-  const frame = "card-grain overflow-hidden rounded-md border border-border bg-surface";
+  const frame = "overflow-hidden rounded-md border border-border bg-surface";
 
   if (preview.kind === "terminal") {
     return (
-      <div className={`${frame} ${compact ? "aspect-video" : "aspect-video lg:aspect-[16/10]"}`}>
+      <div className={`${frame} ${compact ? "aspect-[4/3]" : "aspect-video lg:aspect-[16/10]"}`}>
         <Terminal title={preview.title} lines={preview.lines} compact={compact} />
       </div>
     );
@@ -89,7 +93,8 @@ export function ProjectPreview({ preview, compact = false }: { preview: Preview;
     return (
       <div className={frame}>
         <WindowBar label={preview.url} />
-        <Shot src={preview.src} alt={preview.alt} className={compact ? "aspect-video" : "aspect-[16/10]"} />
+        {/* Shown at its own shape, so nothing is cropped off the sides. */}
+        <Shot src={preview.src} alt={preview.alt} width={960} sizes="(min-width: 1024px) 448px, 100vw" />
       </div>
     );
   }
@@ -100,7 +105,7 @@ export function ProjectPreview({ preview, compact = false }: { preview: Preview;
   return (
     <div
       className={`${frame} relative flex items-start justify-center gap-3 px-6 pt-6 ${
-        compact ? "aspect-video" : "aspect-video lg:aspect-[16/10]"
+        compact ? "aspect-[4/3]" : "aspect-video lg:aspect-[16/10]"
       }`}
     >
       {[rest[0], first, rest[1]].filter(Boolean).map((shot, i) => (
@@ -110,7 +115,14 @@ export function ProjectPreview({ preview, compact = false }: { preview: Preview;
             i === 1 ? "z-10 w-[34%]" : "mt-8 hidden w-[28%] opacity-80 sm:block"
           }`}
         >
-          <Shot src={shot.src} alt={shot.alt} className="aspect-[9/16]" />
+          <Shot
+            src={shot.src}
+            alt={shot.alt}
+            width={480}
+            sizes="(min-width: 1024px) 152px, 34vw"
+            className="aspect-[9/16]"
+            imgClassName="h-full w-full object-cover object-top"
+          />
         </div>
       ))}
     </div>

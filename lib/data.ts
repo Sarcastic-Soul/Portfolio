@@ -2,11 +2,15 @@ import { EnvelopeSimpleIcon } from "@phosphor-icons/react/ssr";
 import { Github, Linkedin } from "@/components/icons";
 
 
+export const SITE_URL = "https://anish-k.vercel.app";
+export const EMAIL = "anishisbusy@gmail.com";
+
 export const navItems = [
-  { name: "Home", href: "/" },
-  { name: "Experience", href: "/experience" },
-  { name: "Projects", href: "/projects" },
-  { name: "Skills", href: "/skills" },
+  { name: "Experience", href: "#experience" },
+  { name: "Projects", href: "#projects" },
+  { name: "Skills", href: "#skills" },
+  { name: "Achievements", href: "#achievements" },
+  { name: "Contact", href: "#contact" },
 ];
 
 export const RESUME_LINK = "https://drive.google.com/file/d/1C5Lt3JL2GDQHJha5d4Pp3h1uKCnQkfv2/view";
@@ -18,7 +22,7 @@ export const socialLinks = [
     href: "https://www.linkedin.com/in/anish-kumar-852397290/",
     label: "LinkedIn",
   },
-  { icon: EnvelopeSimpleIcon, href: "mailto:anishisbusy@gmail.com", label: "Email" },
+  { icon: EnvelopeSimpleIcon, href: `mailto:${EMAIL}`, label: "Email" },
 ];
 
 export const experiences = [
@@ -28,6 +32,7 @@ export const experiences = [
     location: "Bangalore, Karnataka (Remote)",
     period: "October 2025 – August 2026",
     certificate: "https://drive.google.com/file/d/1K1s2R5DibTPhC9Yc4dGwsNVBW6LCKZhW/view",
+    certificateImage: "/certs/prism-internship.webp",
     bullets: [
       "Built Guide Weave, an AI tool that turns product manuals into step-by-step visual guides, using a multimodal RAG pipeline with ChromaDB to pull matching text and images from the manuals.",
       "Ran the LLM locally so no data left the machine, and wrote benchmarks to raise retrieval accuracy and cut response time.",
@@ -40,6 +45,7 @@ export const experiences = [
     location: "Bangalore, Karnataka (Remote)",
     period: "June 2026 – August 2026",
     certificate: "https://drive.google.com/file/d/1mFYXIqGJotL_iXloaLr13juR-zpmkH85/view",
+    certificateImage: "/certs/aparsoft-internship.webp",
     bullets: [
       "12-week internship in full-stack and agentic AI work on an educational AI chatbot platform (Django REST Framework, Next.js, LangChain/LangGraph).",
       "Found and fixed bugs in the Next.js frontend of a RAG system backed by PostgreSQL (pgvector) and Redis.",
@@ -65,8 +71,6 @@ export const openSourceContributions = [
 ];
 
 export type ProjectCategory = "Systems" | "AI" | "Full Stack" | "Mobile";
-
-export const projectCategories: ProjectCategory[] = ["Systems", "AI", "Full Stack", "Mobile"];
 
 export type TerminalLine = {
   // cmd: typed at the prompt, out: plain output, ok: success, dim: comment
@@ -115,19 +119,10 @@ export const projects: Project[] = [
     github: "https://github.com/Sarcastic-Soul/Radish",
     featured: true,
     preview: {
-      kind: "terminal",
-      title: "redis-benchmark → radish:6379",
-      lines: [
-        { kind: "cmd", text: "redis-benchmark -c 50 -n 100000 -q" },
-        { text: "PING   ~151,000 req/s   p50 0.151 ms" },
-        { text: "SET    ~144,000 req/s   p50 0.151 ms" },
-        { text: "GET    ~175,000 req/s   p50 0.151 ms" },
-        { text: "HSET   ~164,000 req/s   p50 0.151 ms" },
-        { text: "LPUSH  ~159,000 req/s   p50 0.151 ms" },
-        { kind: "dim", text: "# AOF everysec, RDB snapshots and LRU eviction all on" },
-        { kind: "cmd", text: "redis-cli SET lang java" },
-        { kind: "ok", text: "OK" },
-      ],
+      kind: "browser",
+      src: `/previews/radish-dashboard.webp`,
+      url: "localhost:6380 / radish dashboard",
+      alt: "Radish web dashboard listing the keys stored on a running server",
     },
   },
   {
@@ -151,18 +146,10 @@ export const projects: Project[] = [
     },
     featured: true,
     preview: {
-      kind: "terminal",
-      title: "codemon",
-      lines: [
-        { kind: "cmd", text: "codemon --plan" },
-        { kind: "dim", text: "# read and grep only, every write is denied" },
-        { kind: "cmd", text: "codemon --sandbox docker" },
-        { kind: "dim", text: "# bash runs inside a throwaway container" },
-        { kind: "cmd", text: "codemon --rewind" },
-        { kind: "dim", text: "# restore files from the last session" },
-        { kind: "cmd", text: 'codemon run "review the diff" --json' },
-        { kind: "ok", text: "exit 0 finished · 2 turn budget hit · 3 denied" },
-      ],
+      kind: "browser",
+      src: `/previews/codemon-session.webp`,
+      url: "codemon / terminal",
+      alt: "Codemon in the terminal showing a diff of server.py and asking permission before running a bash command",
     },
   },
   {
@@ -238,17 +225,10 @@ export const projects: Project[] = [
     github: "https://github.com/Sarcastic-Soul/agentic-customer-support-ticket-system",
     featured: true,
     preview: {
-      kind: "terminal",
-      title: "ticket lifecycle",
-      lines: [
-        { text: "channel   web · whatsapp · email · voice" },
-        { text: "classify  intent → tool group" },
-        { text: "retrieve  pgvector + full-text (hybrid)" },
-        { text: "act       typed tools: orders, payments, shipments" },
-        { text: "verify    grounded? policy-safe? complete?" },
-        { kind: "ok", text: "decide    reply  |  escalate with handoff packet" },
-        { kind: "dim", text: "# human replies, AI resumes from its checkpoint" },
-      ],
+      kind: "browser",
+      src: `/previews/support-desk-reasoning.webp`,
+      url: "support desk / ticket TCK-0007",
+      alt: "Support desk console showing the AI run for a ticket: payments and logistics agents, and a conflict between them settled by a rule",
     },
   },
   {
@@ -320,7 +300,7 @@ export const projects: Project[] = [
       kind: "browser",
       src: `/previews/chatapp.webp`,
       url: "socket-chat-nine-tau.vercel.app",
-      alt: "ChatApp group conversation in dark mode",
+      alt: "ChatApp group chat with an image message and reactions",
     },
   },
   {
@@ -370,20 +350,7 @@ export const projects: Project[] = [
 export const skillCategories = [
   {
     title: "Languages",
-    skills: ["Java", "JavaScript", "TypeScript", "Python", "HTML", "CSS", "SQL", "MySQL"],
-  },
-  {
-    title: "Frontend",
-    skills: [
-      "React",
-      "Next.js",
-      "TypeScript",
-      "Tailwind CSS",
-      "Shadcn/UI",
-      "Zustand",
-      "WebRTC",
-      "Socket.IO",
-    ],
+    skills: ["Java", "TypeScript", "JavaScript", "Python", "SQL", "Rust"],
   },
   {
     title: "Backend",
@@ -394,61 +361,50 @@ export const skillCategories = [
       "Node.js",
       "Bun",
       "Express.js",
-      "REST APIs",
-      "Django REST",
       "FastAPI",
-      "LangChain/LangGraph",
+      "Django REST",
       "Kafka",
       "RabbitMQ",
     ],
   },
   {
+    title: "Frontend",
+    skills: ["React", "Next.js", "Tailwind CSS", "Zustand", "Socket.IO", "WebRTC"],
+  },
+  {
+    title: "AI",
+    skills: ["LangChain/LangGraph", "RAG", "pgvector", "ChromaDB", "MCP", "Vercel AI SDK"],
+  },
+  {
     title: "Databases",
-    skills: [
-      "MongoDB",
-      "PostgreSQL (pgvector)",
-      "Redis",
-      "Supabase",
-      "ChromaDB",
-      "Multimodal RAG",
-      "Drizzle ORM",
-      "NeonDB",
-    ],
+    skills: ["PostgreSQL", "Redis", "MongoDB", "SQLite", "Drizzle ORM"],
   },
   {
     title: "DevOps & Cloud",
     skills: [
-      "AWS",
       "Docker",
       "Kubernetes",
+      "Helm",
+      "AWS",
       "GCP",
       "Terraform",
-      "Helm",
       "Ansible",
       "GitHub Actions",
       "Nginx",
-      "Vercel",
-      "Ubuntu",
       "Linux",
     ],
   },
   {
     title: "Testing & Observability",
-    skills: [
-      "Postman",
-      "Vitest",
-      "JUnit/Mockito",
-      "Prometheus",
-      "Grafana",
-      "Loki",
-      "Datadog",
-      "K6",
-    ],
+    skills: ["JUnit/Mockito", "Vitest", "k6", "Postman", "Prometheus", "Grafana", "Loki"],
   },
-  {
-    title: "Tools",
-    skills: ["Git", "Maven", "JWT", "Razorpay", "Cloudinary"],
-  },
+];
+
+export const hackathonWins = [
+  { prize: "Winner, AI + Cybersecurity Track", event: "ForgeHacks 2026" },
+  { prize: "Best Use of Tiger Data", event: "Hacktoberfest x DEV 2026, Week 1" },
+  { prize: "Best Use of Backboard", event: "Hacktoberfest x DEV 2026, Week 2" },
+  { prize: "1st place", event: "E-Cell inter-college hackathon" },
 ];
 
 export const achievements = [
@@ -456,56 +412,30 @@ export const achievements = [
     metric: "600+",
     title: "DSA problems solved",
     description: "Across LeetCode and Codeforces, with a Codeforces peak rating above 1300.",
-    category: "Problem solving",
-  },
-  {
-    metric: "1st",
-    title: "E-Cell Hackathon winner",
-    description: "Won the inter-college hackathon with a full-stack build made against the clock.",
-    category: "Competition",
   },
   {
     metric: "200+",
     title: "Coding Club core member",
     description: "Ran a 3-day coding fest with 13 events and over 200 active participants.",
-    category: "Leadership",
   },
+];
+
+export const codingProfiles = [
+  { label: "LeetCode", href: "https://leetcode.com/u/Anish_Kumar_/" },
+  { label: "Codeforces", href: "https://codeforces.com/profile/Sarcastic-Soul" },
 ];
 
 export const certifications = [
   {
-    title: "Samsung PRISM Internship",
-    description: "Completed the Samsung PRISM virtual internship, October 2025 to August 2026, building Guide Weave.",
-    category: "Internship",
-    badgeImage: `/certs/prism-internship.webp`,
-    verifyUrl: "https://drive.google.com/file/d/1K1s2R5DibTPhC9Yc4dGwsNVBW6LCKZhW/view",
-  },
-  {
-    title: "Aparsoft Internship",
-    description: "Completed a 12-week internship in full-stack and agentic AI development, June to August 2026.",
-    category: "Internship",
-    badgeImage: `/certs/aparsoft-internship.webp`,
-    verifyUrl: "https://drive.google.com/file/d/1mFYXIqGJotL_iXloaLr13juR-zpmkH85/view",
-  },
-  {
     title: "Oracle Data Platform 2025 Certified Foundations Associate",
-    description: "Covers the basics of Oracle's data services: databases, storage and data tools on Oracle Cloud.",
-    category: "Oracle Certified",
-    badgeImage: "https://brm-workforce.oracle.com/pdf/certview/images/OCI25DCFAV2.png",
+    issuer: "Oracle",
+    badgeImage: "/certs/oracle-badge.webp",
     verifyUrl: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=5C0E219F2193E91F3B5F545705B067F53C473829CE03CA826F8762A832A2410A",
   },
   {
     title: "Postman API Fundamentals Student Expert",
-    description: "Earned March 2025 for building, testing and documenting APIs in Postman.",
-    category: "Certification",
-    badgeImage: "https://api.badgr.io/public/assertions/LHO5EhdSTIaKZLaIcLUU9Q/image",
+    issuer: "Postman, March 2025",
+    badgeImage: "/certs/postman-badge.webp",
     verifyUrl: "https://badgecheck.io?url=https%3A%2F%2Fapi.badgr.io%2Fpublic%2Fassertions%2FLHO5EhdSTIaKZLaIcLUU9Q%3Fidentity__email%3Danishisbusy%2540gmail.com&identity__email=anishisbusy@gmail.com",
-  },
-  {
-    title: "Holopin Badges",
-    description: "Badges from open-source events and contributions.",
-    category: "Open Source",
-    badgeImage: "https://holopin.me/sarcasticsoul",
-    verifyUrl: "https://holopin.io/@sarcasticsoul",
   },
 ];

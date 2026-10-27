@@ -1,48 +1,68 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowUpIcon as ArrowUp } from "@phosphor-icons/react/ssr";
+import { useEffect, useState } from "react";
+import { ArrowUpIcon } from "@phosphor-icons/react/ssr";
 
+const RADIUS = 20;
+const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+
+// Back-to-top button. The ring around it fills as the page is read.
 export function ScrollToTop() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const toggleVisibility = () => {
-      if (window.scrollY > 300) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(max > 0 ? Math.min(window.scrollY / max, 1) : 0);
+      setVisible(window.scrollY > 400);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
     };
 
-    window.addEventListener("scroll", toggleVisibility);
-    return () => window.removeEventListener("scroll", toggleVisibility);
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(frame);
+    };
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+  const toTop = () => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
   };
 
   return (
-    <div
-      className={`fixed bottom-8 right-8 z-50 no-print transition-all duration-300 transform ${
-        isVisible
-          ? "opacity-100 translate-y-0"
-          : "opacity-0 translate-y-4 pointer-events-none"
+    <button
+      type="button"
+      onClick={toTop}
+      aria-label="Back to top"
+      tabIndex={visible ? 0 : -1}
+      className={`fixed bottom-5 right-5 z-40 grid h-12 w-12 place-items-center rounded-full bg-background text-foreground transition-opacity duration-200 hover:text-brand sm:bottom-8 sm:right-8 ${
+        visible ? "opacity-100" : "pointer-events-none opacity-0"
       }`}
     >
-      <Button
-        onClick={scrollToTop}
-        size="sm"
-        className="h-10 w-10 rounded-md border border-border bg-background p-0 text-foreground transition-colors duration-200 hover:border-brand hover:bg-background hover:text-brand"
-      >
-        <ArrowUp className="h-5 w-5" />
-        <span className="sr-only">Scroll to top</span>
-      </Button>
-    </div>
+      <svg viewBox="0 0 48 48" className="absolute inset-0 h-full w-full -rotate-90" aria-hidden>
+        <circle cx="24" cy="24" r={RADIUS} fill="none" strokeWidth="2" className="stroke-border" />
+        <circle
+          cx="24"
+          cy="24"
+          r={RADIUS}
+          fill="none"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeDasharray={CIRCUMFERENCE}
+          strokeDashoffset={CIRCUMFERENCE * (1 - progress)}
+          className="stroke-brand"
+        />
+      </svg>
+      <ArrowUpIcon className="relative h-5 w-5" weight="bold" />
+    </button>
   );
 }

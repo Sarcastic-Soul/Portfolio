@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
 import { MoonIcon as Moon, SunIcon as Sun } from "@phosphor-icons/react/ssr";
-import { setThemeWithTransition } from "@/lib/theme-transition";
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -15,11 +13,10 @@ export function ThemeToggle() {
   const isDark = resolvedTheme === "dark";
 
   return (
-    <Button
-      variant="ghost"
-      size="sm"
-      onClick={() => setThemeWithTransition(isDark ? "light" : "dark", setTheme)}
-      className="h-11 w-11 rounded-md p-0 hover:bg-muted transition-colors sm:h-9 sm:w-9"
+    <button
+      type="button"
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      className="inline-flex h-11 w-11 items-center justify-center rounded-md text-foreground transition-colors hover:bg-muted sm:h-9 sm:w-9"
       aria-label={mounted && isDark ? "Switch to light theme" : "Switch to dark theme"}
     >
       {/* The resolved theme is unknown until mount, so hold the space to keep
@@ -27,10 +24,10 @@ export function ThemeToggle() {
       {!mounted ? (
         <span className="h-4 w-4" />
       ) : isDark ? (
-        <Sun className="h-4 w-4 text-foreground" />
+        <Sun className="h-4 w-4" />
       ) : (
-        <Moon className="h-4 w-4 text-foreground" />
+        <Moon className="h-4 w-4" />
       )}
-    </Button>
+    </button>
   );
 }
