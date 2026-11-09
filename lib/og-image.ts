@@ -4,5 +4,5 @@ export const ogImage = {
   url: "/og.png",
   width: 1200,
   height: 630,
-  alt: "Anish Kumar, Full Stack & Systems Developer portfolio",
+  alt: "Anish Kumar, Backend & Full-Stack Developer portfolio",
 };

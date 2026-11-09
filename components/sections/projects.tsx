@@ -7,6 +7,7 @@ import {
 import type { Icon } from "@phosphor-icons/react";
 import { projects, type Project } from "@/lib/data";
 import { ProjectPreview, smallSrc } from "@/components/project-preview";
+import { sizeOf } from "@/lib/image-sizes";
 import { Section, TechLine, textLink } from "@/components/sections/section";
 
 function ProjectLinks({ project }: { project: Project }) {
@@ -72,6 +73,7 @@ function Thumb({ project }: { project: Project }) {
     // eslint-disable-next-line @next/next/no-img-element
     <img
       src={smallSrc(shot.src)}
+      {...sizeOf(smallSrc(shot.src))}
       alt={shot.alt}
       loading="lazy"
       decoding="async"

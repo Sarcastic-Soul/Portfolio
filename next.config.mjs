@@ -24,9 +24,6 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_LAST_UPDATED: lastCommitDate(),
   },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   images: {
     unoptimized: true,
   },

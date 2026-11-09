@@ -30,7 +30,7 @@ export function Hero() {
           </p>
         </div>
 
-        {/* Pre-scaled copies of /image.png. Letting the browser shrink the
+        {/* Pre-scaled copies of the original photo. Letting the browser shrink the
             1792px original in one step made the art look jagged. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img

@@ -1,7 +1,39 @@
 {
   "redirects": [
-    { "source": "/experience", "destination": "/#experience", "permanent": true },
-    { "source": "/projects", "destination": "/#projects", "permanent": true },
-    { "source": "/skills", "destination": "/#skills", "permanent": true }
+    {
+      "source": "/experience",
+      "destination": "/#experience",
+      "permanent": true
+    },
+    {
+      "source": "/projects",
+      "destination": "/#projects",
+      "permanent": true
+    },
+    {
+      "source": "/skills",
+      "destination": "/#skills",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(previews|certs)/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/(avatar-256.webp|avatar-512.webp|avatar-768.webp|og.png|icon.png|favicon.ico)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, stale-while-revalidate=86400"
+        }
+      ]
+    }
   ]
 }

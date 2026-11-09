@@ -1,4 +1,5 @@
 import type { ProjectPreview as Preview, TerminalLine } from "@/lib/data";
+import { sizeOf } from "@/lib/image-sizes";
 
 function WindowBar({ label }: { label: string }) {
   return (
@@ -40,6 +41,7 @@ function Shot({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
+        {...sizeOf(src)}
         srcSet={`${smallSrc(src)} ${width / 2}w, ${src} ${width}w`}
         sizes={sizes}
         alt={alt}

@@ -65,7 +65,7 @@ export function Experience() {
             </div>
             <p className="text-sm text-muted-foreground">{entry.location}</p>
             <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
-              <div className={`min-w-0 flex-1 space-y-3 ${entry.image ? "max-w-3xl" : ""}`}>
+              <div className={`min-w-0 flex-1 space-y-3 ${entry.image ? "max-w-3xl" : "max-w-4xl"}`}>
                 <ul className="list-disc space-y-1.5 pl-5 leading-relaxed text-foreground/90 marker:text-brand">
                   {entry.bullets.map((bullet) => (
                     <li key={bullet}>{bullet}</li>

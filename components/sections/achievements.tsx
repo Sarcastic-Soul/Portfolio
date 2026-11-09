@@ -1,6 +1,7 @@
 import { CodeIcon, SealCheckIcon, TrophyIcon } from "@phosphor-icons/react/ssr";
 import { achievements, certifications, codingProfiles, hackathonWins } from "@/lib/data";
 import { Section, textLink } from "@/components/sections/section";
+import { sizeOf } from "@/lib/image-sizes";
 
 export function Achievements() {
   return (
@@ -49,6 +50,7 @@ export function Achievements() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={cert.badgeImage}
+              {...sizeOf(cert.badgeImage)}
               alt=""
               loading="lazy"
               className="h-12 w-16 shrink-0 object-contain"
