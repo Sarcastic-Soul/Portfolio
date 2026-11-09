@@ -31,6 +31,7 @@ export function GET() {
     "",
     ...experiences.flatMap((e) => [
       `### ${e.role}, ${e.company} (${e.period})`,
+      ...(e.website ? [`- Company website: ${e.website}`] : []),
       ...e.bullets.map((b) => `- ${b}`),
       `- Tech: ${e.tech.join(", ")}`,
       "",

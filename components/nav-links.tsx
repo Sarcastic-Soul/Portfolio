@@ -5,7 +5,9 @@ import { navItems } from "@/lib/data";
 
 // Highlights the link for the section currently in view. A section counts as
 // current once its top passes a third of the way down the screen.
-export function NavLinks() {
+// "bar" is the phone version: a row under the header, since the inline links
+// only fit from md up.
+export function NavLinks({ variant = "inline" }: { variant?: "inline" | "bar" }) {
   const [active, setActive] = useState<string | null>(null);
 
   useEffect(() => {
@@ -41,7 +43,13 @@ export function NavLinks() {
   }, []);
 
   return (
-    <ul className="hidden h-14 items-stretch gap-5 text-sm md:flex">
+    <ul
+      className={
+        variant === "bar"
+          ? "mx-auto flex h-10 max-w-5xl items-stretch justify-between gap-3 overflow-x-auto text-[13px] whitespace-nowrap border-t border-border/70 px-4 sm:px-6 md:hidden"
+          : "hidden h-14 items-stretch gap-5 text-sm md:flex"
+      }
+    >
       {navItems.map((item) => {
         const isActive = active === item.href;
         return (

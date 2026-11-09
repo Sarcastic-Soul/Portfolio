@@ -28,6 +28,9 @@ export function Navigation() {
           <ThemeToggle />
         </div>
       </nav>
+      <nav aria-label="Sections" className="md:hidden">
+        <NavLinks variant="bar" />
+      </nav>
     </header>
   );
 }
