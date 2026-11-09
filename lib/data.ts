@@ -140,7 +140,11 @@ export type Project = {
   category: ProjectCategory;
   year: string;
   tagline: string;
+  // Full write-up, used in llms.txt and structured data.
   description: string;
+  // One sentence shown on the page for featured projects. Falls back to description.
+  summary?: string;
+  // Strongest first: the page shows the first 3, llms.txt shows all.
   highlights: string[];
   technologies: string[];
   github: string;
@@ -161,6 +165,7 @@ export const projects: Project[] = [
     tagline: "A Redis-compatible server written from scratch in Java.",
     description:
       "Speaks RESP2 and RESP3, so redis-cli and normal Redis client libraries connect to it unchanged. A single Java NIO event loop serves every client, and a background thread handles AOF writes so the hot path never waits on disk.",
+    summary: "One Java NIO event loop serves every client, and redis-cli or any normal Redis client connects to it unchanged.",
     highlights: [
       "~175K GET/s and ~144K SET/s on redis-benchmark (50 clients, AOF on)",
       "Leader–replica replication, AOF and RDB persistence, pub/sub, transactions",
@@ -184,6 +189,7 @@ export const projects: Project[] = [
     tagline: "A coding agent that runs in your terminal.",
     description:
       "Bring your own API key from about 185 providers. Codemon streams answers, shows every file edit as a diff before it touches disk, and asks before running anything risky. It ships as one binary built with Bun, so there is no Node or npm to install.",
+    summary: "Bring your own API key from about 185 providers. It shows every file edit as a diff and asks before running anything risky.",
     highlights: [
       "Permission gate sorts every tool call into read, write, bash or network",
       "Sessions saved in SQLite: resume one, or roll back all of its file changes",
@@ -211,11 +217,12 @@ export const projects: Project[] = [
     tagline: "A link shortener built to keep serving under heavy load.",
     description:
       "A redirect reads Caffeine, then Valkey, then PostgreSQL, and pushes the click onto a Valkey stream, so no database write sits on the response path. A consumer group writes the clicks in batches. Runs on Kubernetes, with Helm charts for three environments.",
+    summary: "Redirects read through Caffeine, Valkey and PostgreSQL and log clicks to a stream, so no database write slows the response.",
     highlights: [
       "Autoscales from 3 to 15 backend pods",
       "Load-tested with k6 up to 4,000 concurrent users",
-      "Rate limits per user, password-locked links, click limits, hashed-IP analytics",
       "Prometheus, Grafana and Loki for metrics and logs",
+      "Rate limits per user, password-locked links, click limits, hashed-IP analytics",
     ],
     technologies: ["Spring Boot", "React", "PostgreSQL", "Valkey", "Kubernetes", "Helm", "Grafana", "K6"],
     github: "https://github.com/Sarcastic-Soul/springboot-url-shortner",
@@ -235,6 +242,7 @@ export const projects: Project[] = [
     tagline: "Point the phone at a leaf, get a diagnosis. No internet needed.",
     description:
       "An Android app for farmers working where there is no data connection. An on-device MobileNetV2 model names the disease, then the app suggests a targeted treatment and works out the dose, so farmers spray less and spray the right thing.",
+    summary: "An on-device model names the leaf disease, then the app suggests a treatment and works out the dose, with no internet needed.",
     highlights: [
       "38 conditions across 14 crops, fully offline",
       "Offline AI assistant (SmolLM2 on llama.cpp) with voice in and out",
@@ -266,6 +274,7 @@ export const projects: Project[] = [
     tagline: "An AI support agent that knows when to hand off to a human.",
     description:
       "Reads a customer's message from web chat, WhatsApp, email or a voice note, checks real order and payment data, and drafts a reply. A verify step checks the draft before it is sent. When confidence is low it escalates, with a summary and timeline ready for the human agent.",
+    summary: "Reads messages from web chat, WhatsApp, email or voice notes, checks real order data, drafts a reply, and hands off to a human when unsure.",
     highlights: [
       "One LangGraph state machine behind four channels",
       "Hybrid retrieval: pgvector plus full-text search in PostgreSQL",

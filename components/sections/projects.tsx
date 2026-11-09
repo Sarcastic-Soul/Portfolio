@@ -44,10 +44,10 @@ function FeaturedProject({ project }: { project: Project }) {
           </span>
         </h3>
         <p className="text-foreground">{project.tagline}</p>
-        <p className="leading-relaxed text-muted-foreground">{project.description}</p>
+        <p className="leading-relaxed text-muted-foreground">{project.summary ?? project.description}</p>
         {project.highlights.length > 0 && (
           <ul className="list-disc space-y-1 pl-5 text-sm text-foreground/90 marker:text-brand">
-            {project.highlights.map((h) => (
+            {project.highlights.slice(0, 3).map((h) => (
               <li key={h}>{h}</li>
             ))}
           </ul>
@@ -109,7 +109,6 @@ export function Projects() {
                     <span className="font-semibold">{project.title}</span>
                     <span className="text-muted-foreground"> · {project.tagline}</span>
                   </p>
-                  <p className="text-sm leading-relaxed text-muted-foreground">{project.description}</p>
                   <TechLine items={project.technologies} />
                   <ProjectLinks project={project} />
                 </div>
