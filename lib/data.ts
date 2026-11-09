@@ -25,22 +25,60 @@ export const socialLinks = [
   { icon: EnvelopeSimpleIcon, href: `mailto:${EMAIL}`, label: "Email" },
 ];
 
-export const experiences = [
+type Experience = {
+  company: string;
+  role: string;
+  location: string;
+  period: string;
+  website?: string;
+  certificate?: string;
+  certificateImage?: string;
+  bullets: string[];
+  tech: string[];
+};
+
+export const experiences: Experience[] = [
   {
-    company: "Samsung PRISM R&D Institute",
-    role: "R&D Intern",
-    location: "Bangalore, Karnataka (Remote)",
-    period: "October 2025 – August 2026",
-    certificate: "https://drive.google.com/file/d/1K1s2R5DibTPhC9Yc4dGwsNVBW6LCKZhW/view",
-    certificateImage: "/certs/prism-internship.webp",
+    company: "MayaCardio",
+    role: "Software Systems Engineer Intern",
+    location: "Delhi (On-site)",
+    period: "November 2026 – Present",
     bullets: [
-      "Built Guide Weave, an AI tool that turns product manuals into step-by-step visual guides, using a multimodal RAG pipeline with ChromaDB to pull matching text and images from the manuals.",
-      "Ran the LLM locally so no data left the machine, and wrote benchmarks to raise retrieval accuracy and cut response time.",
+      "Building software for MayaCardio's bedside cardiac monitor and its connected cloud services, so it holds up in real clinical use.",
+      "Working across the path from sensor interfaces through device services and the application to the cloud: diagnostics, logging, tests, and fixing restart, connectivity and timing failures.",
+      "Improving the waveform display and integrating reviewed signal-processing and ML components into the device application, alongside device–cloud integration for a hospital pilot.",
     ],
-    tech: ["Multimodal RAG", "ChromaDB", "Local LLM", "Python", "Benchmarking"],
+    tech: ["Embedded Software", "Device–Cloud Integration", "Testing", "Diagnostics", "Signal Processing"],
+  },
+  {
+    company: "Avyukt Labs",
+    website: "https://www.avyuktlabs.in",
+    role: "Software Engineering Intern",
+    location: "Remote",
+    period: "July 2026 – October 2026",
+    bullets: [
+      "Built and owned the live classroom in Kalpla's React Native (Expo) app using WebRTC, mediasoup and Socket.IO: screen share, chat, polls and breakout rooms. Fixed Android media bugs.",
+      "Audited the Paintcart NestJS + Prisma API: moved pricing, stock and coupon checks server-side inside DB transactions, fixed auth issues, and added an LRU cache and Postgres indexes.",
+      "Cleared 1,920 ESLint errors and set up EAS OTA updates. 108 PRs merged.",
+    ],
+    tech: ["React Native", "Expo", "WebRTC", "mediasoup", "Socket.IO", "NestJS", "Prisma", "PostgreSQL"],
+  },
+  {
+    company: "Disco",
+    website: "https://discoverdisco.com",
+    role: "Software Engineering Intern",
+    location: "Remote",
+    period: "August 2026 – October 2026",
+    bullets: [
+      "Shipped a personalized recommendation ranker (LightGBM over Gemini place profiles and embeddings, no model call at serve time) that scored 68.2 vs 52.3 for the old ranker in blind grading.",
+      "Improved a Gemini tool-calling search assistant with parallel tool calls and context caching, and built 4 offline eval harnesses to measure changes.",
+      "Prerendered 660+ routes with Playwright. 145 PRs merged across React and Express.",
+    ],
+    tech: ["LightGBM", "Gemini API", "React", "Express", "Playwright"],
   },
   {
     company: "Aparsoft Private Limited",
+    website: "https://aparacademy.com",
     role: "Software Engineering Intern",
     location: "Bangalore, Karnataka (Remote)",
     period: "June 2026 – August 2026",
@@ -51,6 +89,19 @@ export const experiences = [
       "Found and fixed bugs in the Next.js frontend of a RAG system backed by PostgreSQL (pgvector) and Redis.",
     ],
     tech: ["Next.js", "Django REST", "LangChain", "PostgreSQL (pgvector)", "Redis"],
+  },
+  {
+    company: "Samsung PRISM R&D Institute",
+    role: "R&D Intern",
+    location: "Bangalore, Karnataka (Remote)",
+    period: "November 2025 – May 2026",
+    certificate: "https://drive.google.com/file/d/1K1s2R5DibTPhC9Yc4dGwsNVBW6LCKZhW/view",
+    certificateImage: "/certs/prism-internship.webp",
+    bullets: [
+      "Built Guide Weave, an AI tool that turns product manuals into step-by-step visual guides, using a multimodal RAG pipeline with ChromaDB to pull matching text and images from the manuals.",
+      "Ran the LLM locally so no data left the machine, and wrote benchmarks to raise retrieval accuracy and cut response time.",
+    ],
+    tech: ["Multimodal RAG", "ChromaDB", "Local LLM", "Python", "Benchmarking"],
   },
 ];
 
@@ -401,10 +452,10 @@ export const skillCategories = [
 ];
 
 export const hackathonWins = [
-  { prize: "Winner, AI + Cybersecurity Track", event: "ForgeHacks 2026" },
-  { prize: "Best Use of Tiger Data", event: "Hacktoberfest x DEV 2026, Week 1" },
-  { prize: "Best Use of Backboard", event: "Hacktoberfest x DEV 2026, Week 2" },
-  { prize: "1st place", event: "E-Cell inter-college hackathon" },
+  { prize: "Winner, AI + Cybersecurity Track", event: "ForgeHacks · Oct 2026" },
+  { prize: "Best Use of Tiger Data", event: "Hacktoberfest Open-Source AI Challenge: Touch Grass (DEV) · Oct 2026" },
+  { prize: "Best Use of Backboard", event: "Hacktoberfest Open-Source AI Challenge: Side Hustle (DEV) · Oct 2026" },
+  { prize: "3rd Place", event: "E-Cell Hackathon · Feb 2025" },
 ];
 
 export const achievements = [

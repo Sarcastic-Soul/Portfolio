@@ -14,7 +14,7 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mon
 
 const title = "Anish Kumar | Backend & Full-Stack Developer";
 const description =
-  "Anish Kumar, B.Tech student at IIIT Naya Raipur and backend & full-stack developer. Two internships (Samsung PRISM, Aparsoft), a Redis-compatible server in Java, a Kubernetes-scaled URL shortener and a terminal coding agent.";
+  "Anish Kumar, B.Tech student at IIIT Naya Raipur and backend & full-stack developer. Five internships (MayaCardio, Avyukt Labs, Disco, Samsung PRISM, Aparsoft), a Redis-compatible server in Java, a Kubernetes-scaled URL shortener and a terminal coding agent.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

@@ -2,8 +2,8 @@ import { ArrowUpRightIcon, MapPinIcon } from "@phosphor-icons/react/ssr";
 import { hackathonWins, socialLinks, RESUME_LINK } from "@/lib/data";
 
 const highlights = [
-  { value: String(hackathonWins.length), label: "hackathon wins, across Devpost hackathons and Hacktoberfest x DEV" },
-  { value: "2", label: "internships, at Samsung PRISM and Aparsoft" },
+  { value: String(hackathonWins.length), label: "hackathon wins, across Devpost, DEV and college hackathons" },
+  { value: "5", label: "internships, at MayaCardio, Avyukt Labs, Disco, Samsung PRISM and Aparsoft" },
   { value: "600+", label: "DSA problems solved on LeetCode and Codeforces" },
 ];
 
